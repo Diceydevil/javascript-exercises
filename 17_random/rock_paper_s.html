@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 1. Get the user's choice
+      // 2. Get the computer's choice
+      // 3. Determine the winner
+      // 4. Best of 3
+      // 5. Ask the user if they want to play again
+      // 6. If the user says yes, go back to step 1
+      // 7. If the user says no, exit the program
+
+      // Function to get the user's choice via number input
+
+      // Set the variables for the game
+      let userWins = 0;
+      let computerWins = 0;
+      let ties = 0;
+      let rounds = 0;
+      let maxRounds = 3;
+      let userChoice = "";
+      let computerChoice = "";
+
+      function getUserChoice() {
+        let choice = prompt("Enter rock, paper, or scissors:").toLowerCase();
+        if (choice === "rock" || choice === "paper" || choice === "scissors") {
+          return choice;
+        } else {
+          console.log("Invalid choice.");
+          choice = prompt(
+            "Please enter 'rock', 'paper', or 'scissors':"
+          ).toLowerCase();
+          return choice;
+        }
+      }
+
+      // Function to get the computer's choice via random number
+      function getComputerChoice() {
+        let computerChoice = Math.floor(Math.random() * 3);
+        if (computerChoice === 0) {
+          return "rock";
+        } else if (computerChoice === 1) {
+          return "paper";
+        } else {
+          return "scissors";
+        }
+      }
+
+      // Function to determine the winner
+      function determineWinner(userChoice, computerChoice) {
+        if (userChoice === computerChoice) {
+          return "It's a tie!";
+        } else if (userChoice === "rock" && computerChoice === "scissors") {
+          return "You win!";
+        } else if (userChoice === "paper" && computerChoice === "rock") {
+          return "You win!";
+        } else {
+          return "You lose!";
+        }
+      }
+
+      // Function to play the game
+      function playGame() {
+        userWins = 0;
+        computerWins = 0;
+        ties = 0;
+        rounds = 0;
+
+        while (rounds < maxRounds) {
+          console.log(`\n--- Round ${rounds + 1} ---`);
+          userChoice = getUserChoice();
+          computerChoice = getComputerChoice();
+
+          console.log(
+            `You chose ${userChoice} and the computer chose ${computerChoice}.`
+          );
+
+          let result = determineWinner(userChoice, computerChoice);
+          console.log(result);
+
+          if (result === "You win!") userWins++;
+          else if (result === "You lose!") computerWins++;
+          else ties++;
+
+          rounds++;
+        }
+
+        // Announce final winner
+        console.log(`\n=== FINAL RESULTS ===`);
+        console.log(`You: ${userWins} wins`);
+        console.log(`Computer: ${computerWins} wins`);
+        console.log(`Ties: ${ties}`);
+
+        if (userWins > computerWins) {
+          console.log("🎉 You won the best of 3!");
+        } else if (computerWins > userWins) {
+          console.log("💻 Computer won the best of 3!");
+        } else {
+          console.log("🤝 It's a tie overall!");
+        }
+
+        askToPlayAgain();
+      }
+
+      // Function to ask the user if they want to play again
+      function askToPlayAgain() {
+        let playAgain = prompt("Do you want to play again? (yes/no)");
+        if (playAgain === "yes") {
+          playGame();
+        } else {
+          console.log("Thanks for playing!");
+        }
+      }
+      // Start the game when the page loads
+      playGame();
+    </script>
+  </body>
+</html>
