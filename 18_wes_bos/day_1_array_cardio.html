@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 1 Array Cardio - Wes Bos JavaScript30</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        border-bottom: 3px solid #000000;
+        padding-bottom: 10px;
+      }
+
+      .exercise {
+        background: white;
+        margin: 20px 0;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .exercise h2 {
+        color: #000000;
+        margin-top: 0;
+      }
+
+      /* Table Styles */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        background: white;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #000000;
+        color: white;
+        font-weight: bold;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .result-number {
+        font-size: 2em;
+        color: #000000;
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        background: #f0f8ff;
+        border-radius: 8px;
+        margin: 10px 0;
+      }
+
+      .result-list {
+        background: #f8f8f8;
+        padding: 15px;
+        border-left: 4px solid #000000;
+        margin: 10px 0;
+      }
+
+      .result-list ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .console-note {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🏋️‍♀️ Array Cardio Day 1</h1>
+
+    <div class="console-note">
+      <strong>💡 Pro Tip:</strong> Open your browser's Developer Tools (F12) and
+      check the Console tab to see console.table() outputs!
+    </div>
+
+    <div class="exercise">
+      <h2>Exercise 1: Filter inventors born in the 1500s</h2>
+      <div id="exercise1"></div>
+    </div>
+
+    <div class="exercise">
+      <h2>Exercise 2: Map inventors' first and last names</h2>
+      <div id="exercise2"></div>
+    </div>
+
+    <div class="exercise">
+      <h2>Exercise 3: Sort inventors by birthdate (oldest to youngest)</h2>
+      <div id="exercise3"></div>
+    </div>
+
+    <div class="exercise">
+      <h2>Exercise 4: Total years all inventors lived</h2>
+      <div id="exercise4"></div>
+    </div>
+
+    <div class="exercise">
+      <h2>Exercise 5: Sort inventors by years lived</h2>
+      <div id="exercise5"></div>
+    </div>
+
+    <div class="exercise">
+      <h2>
+        Exercise 6: List of Boulevards in Paris that contain 'de' anywhere in
+        the name
+      </h2>
+      <div id="exercise6">
+        <p>
+          This list only visible doing it via console in the wikipedia page
+          mentioned in the exercise.
+          (https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris)
+        </p>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <h2>Exercise 7: Sort Exercise</h2>
+      <div id="exercise7"></div>
+    </div>
+
+    <div class="exercise">
+      <h2>Exercise 8: Reduce Exercise</h2>
+      <div id="exercise8"></div>
+    </div>
+
+    <script>
+      // Your existing data
+      const inventors = [
+        { first: "Albert", last: "Einstein", year: 1879, passed: 1955 },
+        { first: "Isaac", last: "Newton", year: 1643, passed: 1727 },
+        { first: "Galileo", last: "Galilei", year: 1564, passed: 1642 },
+        { first: "Marie", last: "Curie", year: 1867, passed: 1934 },
+        { first: "Johannes", last: "Kepler", year: 1571, passed: 1630 },
+        { first: "Nicolaus", last: "Copernicus", year: 1473, passed: 1543 },
+        { first: "Max", last: "Planck", year: 1858, passed: 1947 },
+        { first: "Katherine", last: "Blodgett", year: 1898, passed: 1979 },
+        { first: "Ada", last: "Lovelace", year: 1815, passed: 1852 },
+        { first: "Sarah E.", last: "Goode", year: 1855, passed: 1905 },
+        { first: "Lise", last: "Meitner", year: 1878, passed: 1968 },
+        { first: "Hanna", last: "Hammarström", year: 1829, passed: 1909 },
+      ];
+
+      const people = [
+        "Beck, Glenn",
+        "Becker, Carl",
+        "Beckett, Samuel",
+        "Beddoes, Mick",
+        "Beecher, Henry",
+        "Beethoven, Ludwig",
+        "Begin, Menachem",
+        "Belloc, Hilaire",
+        "Bellow, Saul",
+        "Benchley, Robert",
+        "Benenson, Peter",
+        "Ben-Gurion, David",
+        "Benjamin, Walter",
+        "Benn, Tony",
+        "Bennington, Chester",
+        "Benson, Leana",
+        "Bent, Silas",
+        "Bentsen, Lloyd",
+        "Berger, Ric",
+        "Bergman, Ingmar",
+        "Berio, Luciano",
+        "Berle, Milton",
+        "Berlin, Irving",
+        "Berne, Eric",
+        "Bernhard, Sandra",
+        "Berra, Yogi",
+        "Berry, Halle",
+        "Berry, Wendell",
+        "Bethea, Erin",
+        "Bevan, Aneurin",
+        "Bevel, Ken",
+        "Biden, Joseph",
+        "Bierce, Ambrose",
+        "Biko, Steve",
+        "Billings, Josh",
+        "Biondo, Frank",
+        "Birrell, Augustine",
+        "Black, Elk",
+        "Blair, Robert",
+        "Blair, Tony",
+        "Blake, William",
+      ];
+
+      // Helper function to create HTML table from inventor objects
+      function createInventorTable(data, includeYearsLived = false) {
+        let html = "<table>";
+        html += "<thead><tr>";
+        html += "<th>Name</th>";
+        html += "<th>Birth Year</th>";
+        html += "<th>Death Year</th>";
+        html += "<th>Years Lived</th>";
+        html += "</tr></thead><tbody>";
+
+        data.forEach((inventor) => {
+          html += "<tr>";
+          html += `<td>${inventor.first} ${inventor.last}</td>`;
+          html += `<td>${inventor.year}</td>`;
+          html += `<td>${inventor.passed}</td>`;
+          html += `<td>${inventor.passed - inventor.year}</td>`;
+          html += "</tr>";
+        });
+
+        html += "</tbody></table>";
+        return html;
+      }
+
+      // Helper function to create ordered list
+      function createOrderedList(data) {
+        let html = '<div class="result-list"><ol>';
+        data.forEach((item) => {
+          html += `<li>${item}</li>`;
+        });
+        html += "</ol></div>";
+        return html;
+      }
+
+      // Helper function to display number result
+      function displayNumber(elementId, number, description) {
+        const element = document.getElementById(elementId);
+        element.innerHTML = `<div class="result-number">${number} ${description}</div>`;
+      }
+
+      // Array.prototype.filter()
+      // 1. Filter the list of inventors for those who were born in the 1500s
+      const fifteen = inventors.filter(function (inventor) {
+        if (inventor.year >= 1500 && inventor.year <= 1600) {
+          return true;
+        }
+      });
+      console.table(fifteen);
+      document.getElementById("exercise1").innerHTML =
+        createInventorTable(fifteen);
+
+      // Array.prototype.map()
+      // 2. Give us an array of the inventors' first and last names
+      const fullNames = inventors.map(
+        (inventor) => `${inventor.first} ${inventor.last}`
+      );
+      console.log(fullNames);
+      document.getElementById("exercise2").innerHTML =
+        createOrderedList(fullNames);
+
+      // Array.prototype.sort()
+      // 3. Sort the inventors by birthdate, oldest to youngest
+      const oldestToYoungest = inventors.sort((a, b) => a.year - b.year);
+      console.table(oldestToYoungest);
+      document.getElementById("exercise3").innerHTML =
+        createInventorTable(oldestToYoungest);
+
+      // Array.prototype.reduce()
+      // 4. How many years did all the inventors live all together?
+      const totalYears = inventors.reduce((total, inventor) => {
+        return total + (inventor.passed - inventor.year);
+      }, 0);
+
+      displayNumber("exercise4", totalYears, "years total");
+      console.log(totalYears);
+
+      // 5. Sort the inventors by years lived
+      const yearsLived = inventors.sort(
+        (a, b) => (a.passed - a.year) - (b.passed - b.year) // prettier-ignore
+      );
+      console.table(yearsLived);
+      document.getElementById("exercise5").innerHTML =
+        createInventorTable(yearsLived);
+
+      // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
+      // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+      const boulevards = document.querySelectorAll(".mw-category a");
+      const boulevardsArray = Array.from(boulevards);
+      const boulevardsNames = boulevardsArray.map(
+        (boulevard) => boulevard.textContent
+      );
+      const boulevardsNamesWithDe = boulevardsNames.filter((name) =>
+        name.includes("de")
+      );
+      console.log(boulevardsNamesWithDe);
+      document.getElementById("exercise6").innerHTML += createOrderedList(
+        boulevardsNamesWithDe
+      );
+
+      // 7. sort Exercise
+      // Sort the people alphabetically by last name
+      const peopleSorted = people
+        .sort((a, b) => {
+          const [aLastName, aFirstName] = a.split(", ");
+          const [bLastName, bFirstName] = b.split(", ");
+          return aLastName.localeCompare(bLastName);
+        })
+        .map((person) => person.split(", ").reverse().join(" "));
+      console.log(peopleSorted);
+      document.getElementById("exercise7").innerHTML =
+        createOrderedList(peopleSorted);
+
+      // 8. Reduce Exercise
+      // Sum up the instances of each of these
+      const data = [
+        "car",
+        "car",
+        "truck",
+        "truck",
+        "bike",
+        "walk",
+        "car",
+        "van",
+        "bike",
+        "walk",
+        "car",
+        "van",
+        "car",
+        "truck",
+      ];
+
+      const transportation = data.reduce(function (obj, item) {
+        if(!obj[item]) {
+            obj[item] = 0;
+        }
+        obj[item]++;
+        return obj;
+      }, {});
+      console.log(transportation);
+      
+      // Convert object to array of strings for display
+      const transportationList = Object.entries(transportation).map(
+        ([key, value]) => `${key}: ${value}`
+      );
+      
+      document.getElementById("exercise8").innerHTML =
+        createOrderedList(transportationList);
+    </script>
+  </body>
+</html>
