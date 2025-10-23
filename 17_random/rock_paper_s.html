@@ -3,9 +3,73 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .game-buttons {
+        margin: 30px 0;
+      }
+
+      button {
+        font-size: 18px;
+        padding: 15px 25px;
+        margin: 10px;
+        cursor: pointer;
+        border: 2px solid #333;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+      }
+
+      button:hover {
+        background-color: #ddd;
+      }
+
+      #results {
+        margin-top: 30px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        min-height: 100px;
+      }
+
+      .result {
+        font-size: 24px;
+        margin: 15px 0;
+      }
+
+      .score {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e9e9e9;
+        border-radius: 5px;
+      }
+
+      .score h4 {
+        margin: 0 0 10px 0;
+        color: #333;
+      }
+    </style>
   </head>
   <body>
+    <h1>🪨 📄 ✂️ Rock Paper Scissors</h1>
+
+    <div class="game-buttons">
+      <button id="rock-btn">🪨 Rock</button>
+      <button id="paper-btn">📄 Paper</button>
+      <button id="scissors-btn">✂️ Scissors</button>
+    </div>
+
+    <div id="results">
+      <p>Click a button to start playing!</p>
+    </div>
     <script>
       // 1. Get the user's choice
       // 2. Get the computer's choice
@@ -59,65 +123,73 @@
           return "You win!";
         } else if (userChoice === "paper" && computerChoice === "rock") {
           return "You win!";
+        } else if (userChoice === "scissors" && computerChoice === "paper") {
+          return "You win!";
         } else {
           return "You lose!";
         }
       }
 
-      // Function to play the game
-      function playGame() {
-        userWins = 0;
-        computerWins = 0;
-        ties = 0;
-        rounds = 0;
+      // Function to update the results display
+      function updateResultsDisplay(roundInfo, choices, result, score) {
+        const resultsDiv = document.getElementById("results");
 
-        while (rounds < maxRounds) {
-          console.log(`\n--- Round ${rounds + 1} ---`);
-          userChoice = getUserChoice();
-          computerChoice = getComputerChoice();
+        resultsDiv.innerHTML = `
+            <h3>${roundInfo}</h3>
+            <p><strong>${choices}</strong></p>
+            <p class="result"><strong>${result}</strong></p>
+            <div class="score">
+              <h4>Current Score:</h4>
+              <p>You: ${score.user} | Computer: ${score.computer} | Ties: ${score.ties}</p>
+            </div>
+          `;
+      }
+      // Function to play a single round with DOM updates
+      function playRound(playerSelection) {
+        rounds++;
 
-          console.log(
-            `You chose ${userChoice} and the computer chose ${computerChoice}.`
-          );
+        userChoice = playerSelection;
+        computerChoice = getComputerChoice();
 
-          let result = determineWinner(userChoice, computerChoice);
-          console.log(result);
+        let result = determineWinner(userChoice, computerChoice);
 
-          if (result === "You win!") userWins++;
-          else if (result === "You lose!") computerWins++;
-          else ties++;
-
-          rounds++;
-        }
-
-        // Announce final winner
-        console.log(`\n=== FINAL RESULTS ===`);
-        console.log(`You: ${userWins} wins`);
-        console.log(`Computer: ${computerWins} wins`);
-        console.log(`Ties: ${ties}`);
-
-        if (userWins > computerWins) {
-          console.log("🎉 You won the best of 3!");
-        } else if (computerWins > userWins) {
-          console.log("💻 Computer won the best of 3!");
+        if (result === "You win!") {
+          userWins++;
+        } else if (result === "You lose!") {
+          computerWins++;
         } else {
-          console.log("🤝 It's a tie overall!");
+          ties++;
         }
 
-        askToPlayAgain();
+        updateResultsDisplay(
+          `Round ${rounds}`,
+          `You chose ${userChoice} 🆚 computer chose ${computerChoice}.`,
+          result,
+          { user: userWins, computer: computerWins, ties: ties }
+        );
       }
 
-      // Function to ask the user if they want to play again
-      function askToPlayAgain() {
-        let playAgain = prompt("Do you want to play again? (yes/no)");
-        if (playAgain === "yes") {
-          playGame();
-        } else {
-          console.log("Thanks for playing!");
-        }
-      }
-      // Start the game when the page loads
-      playGame();
+      // Add event listeners to buttons
+      document.addEventListener("DOMContentLoaded", function () {
+        const rockBtn = document.getElementById("rock-btn");
+        const paperBtn = document.getElementById("paper-btn");
+        const scissorsBtn = document.getElementById("scissors-btn");
+
+        rockBtn.addEventListener("click", function () {
+          playRound("rock");
+        });
+
+        paperBtn.addEventListener("click", function () {
+          playRound("paper");
+        });
+
+        scissorsBtn.addEventListener("click", function () {
+          playRound("scissors");
+        });
+
+        const resultsDiv = document.getElementById(`results`);
+        resultsDiv.innerHTML = `<p><strong>Game ready! Click a button to start playing.</strong></p>`;
+      });
     </script>
   </body>
 </html>
