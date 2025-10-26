@@ -18,6 +18,9 @@ body {
   margin-top: 16px;
 }
 
+#container[data-state="building"] {
+  outline-color: #4a90e2;
+}
 .square {
   background: #f5f5f5;
   border: 1px solid #ddd;

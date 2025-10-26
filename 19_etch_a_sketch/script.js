@@ -4,20 +4,35 @@ const container = document.querySelector("#container");
 const resizeBtn = document.querySelector("#resize-btn");
 
 resizeBtn.addEventListener("click", () => {
-  const input = prompt("Enter squares per side (1-100):", "16");
+  let input = prompt("Enter squares per side (1-100):", "16");
 
   if (input === null) return;
 
-  const n = Number(input.trim());
+  input = input.trim();
 
+  if (input.length === 0) {
+    alert("Please enter a number between 1 and 100.");
+    return;
+  }
+
+  const n = Number(input);
   const isInteger = Number.isInteger(n);
   const inRange = n >= 1 && n <= 100;
 
   if (!isInteger || !inRange) {
-    alert("Please enter a valid number between 1 and 100.");
+    const retry = prompt(
+      "Invalid. Please enter a whole number from 1 to 100:",
+      "16"
+    );
+    if (retry === null) return;
+    const m = Number(retry.trim());
+    if (!Number.isInteger(m) || m < 1 || m > 100) {
+      alert("Still invalid. Cancelling.");
+      return;
+    }
+    createGrid(m);
     return;
   }
-
   createGrid(n);
 });
 
@@ -28,6 +43,9 @@ function getContainerInnerWidth(el) {
 function createGrid(n) {
   // Basic validation to avoid zero/negative
   const perSide = Math.max(1, Math.floor(n));
+
+  // Indicate busy state
+  container.setAttribute("data-state", "building");
 
   // 1) Clear existing grid
   container.innerHTML = "";
@@ -60,6 +78,7 @@ function createGrid(n) {
     square.addEventListener("mouseenter", () => {
       square.classList.add("hovered");
     });
+
     square.addEventListener("mouseleave", () => {
       // Leave it (drawn) or remove to only highlight while hovering.
       // For an Etch-a-Sketch trail, we keep it. Comment out the next line.
@@ -70,9 +89,11 @@ function createGrid(n) {
   }
   container.appendChild(fragment);
 
+  container.setAttribute("data-state", "idle");
+
   console.log(
     `Grid created with ${perSide}x${perSide}, squares size: ${squareSize}px`
   );
 }
 
-createGrid(87);
+createGrid();
