@@ -1,6 +1,25 @@
 console.log("script loaded");
 
 const container = document.querySelector("#container");
+const resizeBtn = document.querySelector("#resize-btn");
+
+resizeBtn.addEventListener("click", () => {
+  const input = prompt("Enter squares per side (1-100):", "16");
+
+  if (input === null) return;
+
+  const n = Number(input.trim());
+
+  const isInteger = Number.isInteger(n);
+  const inRange = n >= 1 && n <= 100;
+
+  if (!isInteger || !inRange) {
+    alert("Please enter a valid number between 1 and 100.");
+    return;
+  }
+
+  createGrid(n);
+});
 
 function getContainerInnerWidth(el) {
   return Math.floor(el.getBoundingClientRect().width);
