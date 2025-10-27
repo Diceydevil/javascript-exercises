@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Player(name, marker) {
+        if (!new.target) {
+          throw new Error("Use new to create an instance of Player");
+        }
+
+        this.name = name;
+        this.marker = marker;
+
+        this.sayName = function () {
+          console.log(this.name);
+        };
+      }
+    </script>
+  </body>
+</html>
