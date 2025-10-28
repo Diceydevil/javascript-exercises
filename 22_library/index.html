@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Library</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header class="app-header">
+            <h1>My Library</h1>
+
+            <button id="add-book-btn" type="button" aria-controls="slide-over" aria-expanded="false">Add Book</button>
+        </header>
+
+        <main>
+            <section id="library" aria-live="polite">
+                <table id="library-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Pages</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="library-tbody">
+                        <!-- Books will be inserted here -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+        <div id="overlay" class="overlay" hidden></div>
+
+        <!-- Slide-over panel -->
+        <aside id="slide-over" class="slide-over" aria-hidden="true" role="dialog" aria-labelledby="slide-title">
+            <header class="slide-header">
+                <h2 id="slide-title">Add a New Book</h2>
+                <button id="close-slide" class="icon-btn" type="button" aria-label="Close panel">✕</button>
+            </header>
+
+            <form id="new-book-form" class="slide-content" novalidate>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input id="title" name="title" type="text" required placeholder="E.g. The Pragmatic Programmer" />
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input id="author" name="author" type="text" required placeholder="E.g. Andrew Hunt" />
+                </div>
+
+                <div class="form-group">
+                    <label for="pages">Pages</label>
+                    <input id="pages" name="pages" type="number" min="1" step="1" required placeholder="E.g. 352" />
+                </div>
+
+                <label class="checkbox-row">
+                    <input id="read" name="read" type="checkbox" />
+                    <span>Already read</span>
+                </label>
+
+                <div class="form-actions">
+                    <button id="submit-book" type="submit">Add Book</button>
+                    <button id="cancel-form" type="button">Cancel</button>
+                </div>
+            </form>
+        </aside>
+
+        <script src="script.js" defer></script>
+    </body>
+</html>
