@@ -1,0 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: system-ui, sans-serif;
+    margin: 2rem;
+}
+#app {
+    display: grid;
+    gap: 8px;
+}
