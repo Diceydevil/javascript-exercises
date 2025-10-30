@@ -1,30 +1,78 @@
-// Gameboard
-const Gameboard = (() => {
-    const board = Array(9).fill("");
+const cells = document.querySelectorAll(".cell");
+const statusText = document.querySelector("#statusText");
+const resetBtn = document.querySelector("#resetBtn");
+const winConditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8], // Rows
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8], // Columns
+    [0, 4, 8],
+    [2, 4, 6], // Diagonals
+];
+let options = ["", "", "", "", "", "", "", "", ""];
+let currentPlayer = "X";
+let running = false;
 
-    const getBoard = () => [...board];
+initializeGame();
 
-    const getCell = (index) => {
-        if (index < 0 || index > 8) throw new Error("Index out of bounds");
-        return board[index];
-    };
+function initializeGame() {
+    cells.forEach((cell) => cell.addEventListener("click", cellClicked));
+    resetBtn.addEventListener("click", restartGame);
+    statusText.textContent = `${currentPlayer}'s turn`;
+    running = true;
+}
+function cellClicked() {
+    const cellIndex = this.getAttribute("cellIndex");
 
-    const setCell = (index, mark) => {
-        if (index < 0 || index > 8) throw new Error("Index out of bounds");
-        if (mark !== "X" && mark !== "O") throw new Error("Invalid mark");
-        if (board[index] !== "") return false; // Cell already taken
-        board[index] = mark;
-        return true;
-    };
+    if (options[cellIndex] != "" || !running) {
+        return;
+    }
 
-    const reset = () => {
-        for (let i = 0; i < board.length; i++) board[i] = "";
-    };
+    updateCell(this, cellIndex);
+    checkWinner();
+}
+function updateCell(cell, index) {
+    options[index] = currentPlayer;
+    cell.textContent = currentPlayer;
+}
+function changePlayer() {
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    statusText.textContent = `${currentPlayer}'s turn`;
+}
+function checkWinner() {
+    let roundWon = false;
 
-    return { getBoard, getCell, setCell, reset };
-})();
-
-Gameboard.setCell(0, "X");
-Gameboard.setCell(4, "O");
-
-console.log("Board after two moves:", Gameboard.getBoard());
+    for (let i = 0; i < winConditions.length; i++) {
+        const condition = winConditions[i];
+        const cellA = options[condition[0]];
+        const cellB = options[condition[1]];
+        const cellC = options[condition[2]];
+        if (cellA === "" || cellB === "" || cellC === "") {
+            continue;
+        }
+        if (cellA === cellB && cellB === cellC) {
+            roundWon = true;
+            break;
+        }
+    }
+    if (roundWon) {
+        statusText.textContent = `${currentPlayer} wins!`;
+        running = false;
+    } else if (!options.includes("")) {
+        statusText.textContent = "It's a tie!";
+        running = false;
+    } else {
+        changePlayer();
+    }
+}
+function restartGame() {
+    currentPlayer = "X";
+    options = ["", "", "", "", "", "", "", "", ""];
+    statusText.textContent = `${currentPlayer}'s turn`;
+    running = true;
+    cells.forEach((cell) => {
+        cell.textContent = "";
+    });
+}
