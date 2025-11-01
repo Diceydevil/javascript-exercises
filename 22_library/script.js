@@ -1,20 +1,41 @@
 const myLibrary = [];
 
-function Book(title, author, pages, read) {
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = Number(pages);
-    this.read = Boolean(read);
+class Book {
+    constructor(title, author, pages, read) {
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.pages = Number(pages);
+        this.read = Boolean(read);
+    }
+
+    toggleRead() {
+        this.read = !this.read;
+    }
+
+    get readStatus() {
+        return this.read ? "Read" : "Not Read";
+    }
+
+    set pageCount(newPageCount) {
+        if (isNaN(newPageCount) || newPageCount <= 0) {
+            throw new Error("Pages must be a positive number");
+        }
+        this._pageCount = newPageCount;
+    }
+
+    get pageCount() {
+        return this._pageCount;
+    }
+
+    toString() {
+        return `Title: ${this.title}, by ${this.author}, ${this.pageCount} pages, ${this.readStatus}`;
+    }
 }
 
 function addBookToLibrary(book) {
     myLibrary.push(book);
 }
-
-Book.prototype.toggleRead = function () {
-    this.read = !this.read;
-};
 
 function removeBook(id) {
     const index = myLibrary.findIndex((book) => book.id === id);
@@ -25,7 +46,7 @@ function removeBook(id) {
 
 addBookToLibrary(new Book("The Hobbit", "J.R.R. Tolkien", 295, true));
 addBookToLibrary(new Book("1984", "George Orwell", 328, false));
-addBookToLibrary(new Book("To Kill a Mockingbird", "Harper Lee", 281, true));
+addBookToLibrary(new Book("Mockingbird", "Harper Lee", 281, true));
 
 document.addEventListener("DOMContentLoaded", () => {
     setupSlideOver();
@@ -48,15 +69,9 @@ function displayBooks() {
         <td><strong>${book.title}</strong></td>
         <td>${book.author}</td>
         <td>${book.pages}</td>
-        <td><span class="${book.read ? "status-read" : "status-unread"}">${book.read ? "Read" : "Not Read"}</span></td>
-        <td>
-            <button class="btn-toggle" data-action="toggle" data-id="${book.id}">
-                ${book.read ? "Mark Unread" : "Mark Read"}
-            </button>
-            <button class="btn-remove" data-action="remove" data-id="${book.id}">
-                Remove
-            </button>
-        </td>
+        <td>${book.readStatus}</td>
+        <td><button class="btn-toggle" data-action="toggle" data-id="${book.id}">${book.readStatus}</button>
+        <button class="btn-remove" data-action="remove" data-id="${book.id}">Remove</button></td>
         `;
         tbody.appendChild(row);
     });
