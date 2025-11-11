@@ -1,3 +1,3 @@
-console.log("Webpack is working!");
+import { loadHome } from "./home.js";
 
-alert(" Hello form the restaurant page!");
+loadHome();
