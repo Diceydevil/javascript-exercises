@@ -39,6 +39,12 @@ nav button:hover {
     background: #c08a01;
 }
 
+nav button.active {
+    background: #c08a01;
+    font-weight: bold;
+    transform: scale(1.05);
+}
+
 /* Content area */
 #content {
     min-height: calc(100vh - 200px);
@@ -128,6 +134,105 @@ nav button:hover {
 
 .cta-button.secondary:hover {
     background: #e0e0e0;
+}
+
+/* Menu page styles */
+.menu-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.menu-container h1 {
+    font-size: 3rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 3px solid #ffb700;
+    padding-bottom: 1rem;
+}
+
+.menu-item {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #ffb700;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover {
+    transform: translateX(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.menu-item h3 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffb700;
+}
+
+.menu-item p {
+    color: #555;
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Contact page styles */
+.contact-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.contact-container h1 {
+    font-size: 3rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid #ffb700;
+    padding-bottom: 1rem;
+}
+
+.contact-container h2 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.contact-info {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    border-left: 4px solid #ffb700;
+    text-align: left;
+}
+
+.contact-info strong {
+    color: #2c3e50;
+}
+
+.contact-container p {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.8;
 }
 
 /* Footer */
