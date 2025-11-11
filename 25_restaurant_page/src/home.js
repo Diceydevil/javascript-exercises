@@ -6,7 +6,7 @@ export function loadHome() {
 
     // Create a container for homepage content
     const homeContainer = document.createElement("div");
-    homeContainer.classList.add("home-container");
+    homeContainer.classList.add("home-container", "hero-section");
 
     // 1. Main heading
     const heading = document.createElement("h1");
@@ -18,13 +18,6 @@ export function loadHome() {
     tagline.textContent = "Where Every Meal is a Masterpiece";
     tagline.classList.add("tagline");
     homeContainer.appendChild(tagline);
-
-    // 3. Hero image
-    const heroImage = document.createElement("img");
-    heroImage.src = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800";
-    heroImage.alt = "Restaurant interior";
-    heroImage.classList.add("hero-image");
-    homeContainer.appendChild(heroImage);
 
     // 4. Description
     const description = document.createElement("p");
