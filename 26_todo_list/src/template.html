@@ -6,9 +6,38 @@
         <title>Todo List</title>
     </head>
     <body>
-        <h1>Todo List</h1>
-        <div id="content">
-            <!-- Todo app will be rendered here -->
+        <div id="app">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2 class="greeting">▷ Hello [Name]</h2>
+                    <p class="tagline">Make it epic, for all...</p>
+                </div>
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" data-view="projects">Projects</button>
+                    <button class="nav-item" data-view="settings">Settings</button>
+                </nav>
+            </aside>
+
+            <!-- Middle Panel: Projects List -->
+            <main class="middle-panel">
+                <div class="panel-header">
+                    <h2>Projects</h2>
+                    <button class="btn-add" id="addProjectBtn">+ New Project</button>
+                </div>
+                <div class="projects-list" id="projectsList">
+                    <!-- Projects will be rendered here -->
+                </div>
+            </main>
+
+            <!-- Right Panel: Detail View -->
+            <aside class="right-panel">
+                <div class="detail-view" id="detailView">
+                    <div class="empty-state">
+                        <p>Select a project or todo to view details</p>
+                    </div>
+                </div>
+            </aside>
         </div>
     </body>
 </html>
