@@ -108,7 +108,7 @@ export class UI {
                         <div class="flex flex-1 items-center gap-3">
                             <span class="text-xs text-gray-600">${toggleIcon}</span>
                             <div class="w-3 h-3 rounded-full flex-shrink-0" style="background-color: ${project.color}"></div>
-                            <span class="font-semibold text-gray-900">${project.title}</span>
+                            <span class="project-title font-semibold text-gray-900">${project.title}</span>
                             <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">${todos.length}</span>
                         </div>
                         <div class="flex items-center gap-2">
@@ -155,58 +155,57 @@ export class UI {
         if (!project) return;
 
         this.detailView.innerHTML = `
-            <div class="detail-header">
-                <h2 class="detail-title">Project: ${project.title}</h2>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Title:</div>
-                <input type="text" class="detail-input" id="editProjectTitle" value="${project.title}">
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Description:</div>
-                <textarea class="detail-textarea" id="editProjectDescription">${project.description}</textarea>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Lifecycle:</div>
-                <select class="detail-input" id="editProjectLifecycle">
-                    <option value="planning" ${
-                        project.projectLifecycle === "planning" ? "selected" : ""
-                    }>Planning</option>
-                    <option value="inProgress" ${
-                        project.projectLifecycle === "inProgress" ? "selected" : ""
-                    }>In Progress</option>
-                    <option value="completed" ${
-                        project.projectLifecycle === "completed" ? "selected" : ""
-                    }>Completed</option>
-                    <option value="onHold" ${project.projectLifecycle === "onHold" ? "selected" : ""}>On Hold</option>
-                    <option value="cancelled" ${
-                        project.projectLifecycle === "cancelled" ? "selected" : ""
-                    }>Cancelled</option>
-                </select>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Compensation:</div>
-                <select class="detail-input" id="editProjectCompensation">
-                    <option value="paid" ${project.compensationType === "paid" ? "selected" : ""}>Paid</option>
-                    <option value="unpaid" ${project.compensationType === "unpaid" ? "selected" : ""}>Unpaid</option>
-                    <option value="volunteer" ${
-                        project.compensationType === "volunteer" ? "selected" : ""
-                    }>Volunteer</option>
-                </select>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Deadline:</div>
-                <input type="date" class="detail-input" id="editProjectDeadline" value="${project.deadline || ""}">
-            </div>
-            
-            <div class="detail-actions">
-                <button class="btn-primary" id="saveProjectBtn">Save Changes</button>
-                <button class="btn-secondary" id="cancelEditBtn">Cancel</button>
+            <div class="flex flex-col h-full">
+                <!-- Title Section (inline with underline) -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 pb-2 border-b-2 border-gray-900">
+                        <span class="text-xl font-bold text-gray-900">Title:</span>
+                        <input type="text" class="text-xl flex-1 bg-transparent border-none focus:outline-none font-medium text-gray-900" id="editProjectTitle" value="${project.title}" placeholder="Example Title">
+                    </div>
+                </div>
+                
+                <!-- Metadata Section (inline fields) -->
+                <div class="space-y-3 mb-6">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Lifecycle:</span>
+                        <select class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="editProjectLifecycle">
+                            <option value="planning" ${project.projectLifecycle === "planning" ? "selected" : ""}>Planning</option>
+                            <option value="inProgress" ${project.projectLifecycle === "inProgress" ? "selected" : ""}>In Progress</option>
+                            <option value="completed" ${project.projectLifecycle === "completed" ? "selected" : ""}>Completed</option>
+                            <option value="onHold" ${project.projectLifecycle === "onHold" ? "selected" : ""}>On Hold</option>
+                            <option value="cancelled" ${project.projectLifecycle === "cancelled" ? "selected" : ""}>Cancelled</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Compensation:</span>
+                        <select class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="editProjectCompensation">
+                            <option value="paid" ${project.compensationType === "paid" ? "selected" : ""}>Paid</option>
+                            <option value="unpaid" ${project.compensationType === "unpaid" ? "selected" : ""}>Unpaid</option>
+                            <option value="volunteer" ${project.compensationType === "volunteer" ? "selected" : ""}>Volunteer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Deadline:</span>
+                        <input type="date" class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="editProjectDeadline" value="${project.deadline || ""}">
+                    </div>
+                </div>
+                
+                <!-- Horizontal Separator -->
+                <div class="border-b-2 border-gray-900 mb-6"></div>
+                
+                <!-- Description Section -->
+                <div class="flex-1 flex flex-col">
+                    <label class="font-bold text-gray-900 mb-3">Description:</label>
+                    <textarea class="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" id="editProjectDescription" placeholder="text editor in here">${project.description}</textarea>
+                </div>
+                
+                <!-- Action Buttons (optional, add if needed) -->
+                <div class="flex gap-3 mt-6 pt-4 border-t border-gray-200">
+                    <button class="flex-1 px-4 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 transition" id="saveProjectBtn">Save Changes</button>
+                    <button class="flex-1 px-4 py-2 bg-gray-500 text-white font-medium rounded-md hover:bg-gray-600 transition" id="cancelEditBtn">Cancel</button>
+                </div>
             </div>
         `;
 
@@ -225,52 +224,61 @@ export class UI {
         if (!todo) return;
 
         this.detailView.innerHTML = `
-            <div class="detail-header">
-                <h2 class="detail-title">Todo: ${todo.title}</h2>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Title:</div>
-                <input type="text" class="detail-input" id="editTodoTitle" value="${todo.title}">
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Description:</div>
-                <textarea class="detail-textarea" id="editTodoDescription">${todo.description}</textarea>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Status:</div>
-                <select class="detail-input" id="editTodoStatus">
-                    <option value="todo" ${todo.status === "todo" ? "selected" : ""}>To Do</option>
-                    <option value="in-progress" ${todo.status === "in-progress" ? "selected" : ""}>In Progress</option>
-                    <option value="done" ${todo.status === "done" ? "selected" : ""}>Done</option>
-                </select>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Priority:</div>
-                <select class="detail-input" id="editTodoPriority">
-                    <option value="low" ${todo.priority === "low" ? "selected" : ""}>Low</option>
-                    <option value="medium" ${todo.priority === "medium" ? "selected" : ""}>Medium</option>
-                    <option value="high" ${todo.priority === "high" ? "selected" : ""}>High</option>
-                </select>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Start Date:</div>
-                <input type="date" class="detail-input" id="editTodoStartDate" value="${todo.startDate || ""}">
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Deadline:</div>
-                <input type="date" class="detail-input" id="editTodoDeadline" value="${todo.deadline || ""}">
-            </div>
-            
-            <div class="detail-actions">
-                <button class="btn-primary" id="saveTodoBtn">Save Changes</button>
-                <button class="btn-danger" id="deleteTodoBtn">Delete Todo</button>
-                <button class="btn-secondary" id="cancelEditBtn">Cancel</button>
+            <div class="flex flex-col h-full">
+                <!-- Title Section (inline with underline) -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 pb-2 border-b-2 border-gray-900">
+                        <span class="text-xl font-bold text-gray-900">Title:</span>
+                        <input type="text" class="text-xl flex-1 bg-transparent border-none focus:outline-none font-medium text-gray-900" id="editTodoTitle" value="${todo.title}" placeholder="Example Title">
+                    </div>
+                </div>
+                
+                <!-- Metadata Section (inline fields) -->
+                <div class="space-y-3 mb-6">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Status:</span>
+                        <select class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="editTodoStatus">
+                            <option value="todo" ${todo.status === "todo" ? "selected" : ""}>To Do</option>
+                            <option value="in-progress" ${todo.status === "in-progress" ? "selected" : ""}>In Progress</option>
+                            <option value="done" ${todo.status === "done" ? "selected" : ""}>Done</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Priority:</span>
+                        <select class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="editTodoPriority">
+                            <option value="low" ${todo.priority === "low" ? "selected" : ""}>Low</option>
+                            <option value="medium" ${todo.priority === "medium" ? "selected" : ""}>Medium</option>
+                            <option value="high" ${todo.priority === "high" ? "selected" : ""}>High</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Start Date:</span>
+                        <input type="date" class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="editTodoStartDate" value="${todo.startDate || ""}">
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Deadline:</span>
+                        <input type="date" class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="editTodoDeadline" value="${todo.deadline || ""}">
+                    </div>
+                </div>
+                
+                <!-- Horizontal Separator -->
+                <div class="border-b-2 border-gray-900 mb-6"></div>
+                
+                <!-- Description Section -->
+                <div class="flex-1 flex flex-col">
+                    <label class="font-bold text-gray-900 mb-3">Description:</label>
+                    <textarea class="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" id="editTodoDescription" placeholder="Add description here">${todo.description}</textarea>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-3 mt-6 pt-4 border-t border-gray-200">
+                    <button class="flex-1 px-4 py-2 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition" id="saveTodoBtn">Save</button>
+                    <button class="flex-1 px-4 py-2 bg-gray-200 text-gray-900 font-medium rounded-md hover:bg-gray-300 transition" id="deleteTodoBtn">Delete</button>
+                    <button class="flex-1 px-4 py-2 bg-gray-200 text-gray-900 font-medium rounded-md hover:bg-gray-300 transition" id="cancelEditBtn">Cancel</button>
+                </div>
             </div>
         `;
 
@@ -329,37 +337,56 @@ export class UI {
 
     showAddProjectForm() {
         this.detailView.innerHTML = `
-            <div class="detail-header">
-                <h2 class="detail-title">New Project</h2>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Title:*</div>
-                <input type="text" class="detail-input" id="newProjectTitle" placeholder="Project name">
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Description:</div>
-                <textarea class="detail-textarea" id="newProjectDescription" placeholder="Project description"></textarea>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Compensation:</div>
-                <select class="detail-input" id="newProjectCompensation">
-                    <option value="unpaid">Unpaid</option>
-                    <option value="paid">Paid</option>
-                    <option value="volunteer">Volunteer</option>
-                </select>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Deadline:</div>
-                <input type="date" class="detail-input" id="newProjectDeadline">
-            </div>
-            
-            <div class="detail-actions">
-                <button class="btn-primary" id="createProjectBtn">Create Project</button>
-                <button class="btn-secondary" id="cancelBtn">Cancel</button>
+            <div class="flex flex-col h-full">
+                <!-- Title Section (inline with underline) -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 pb-2 border-b-2 border-gray-900">
+                        <span class="text-xl font-bold text-gray-900">Title:</span>
+                        <input type="text" class="text-xl flex-1 bg-transparent border-none focus:outline-none font-medium text-gray-900" id="newProjectTitle" placeholder="New Project Title">
+                    </div>
+                </div>
+
+                <!-- Metadata Section (inline fields) -->
+                <div class="space-y-3 mb-6">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Lifecycle:</span>
+                        <select class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="newProjectLifecycle">
+                            <option value="planning">Planning</option>
+                            <option value="inProgress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="onHold">On Hold</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Compensation:</span>
+                        <select class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="newProjectCompensation">
+                            <option value="paid">Paid</option>
+                            <option value="unpaid">Unpaid</option>
+                            <option value="volunteer">Volunteer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Deadline:</span>
+                        <input type="date" class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="newProjectDeadline">
+                    </div>
+                </div>
+
+                <!-- Horizontal Separator -->
+                <div class="border-b-2 border-gray-900 mb-6"></div>
+                
+                <!-- Description Section -->
+                <div class="flex-1 flex flex-col">
+                    <label class="font-bold text-gray-900 mb-3">Description:</label>
+                    <textarea class="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" id="newProjectDescription" placeholder="Add description here"></textarea>
+                </div>
+                
+                <div class="flex gap-3 mt-6 pt-4 border-t border-gray-200">
+                    <button class="flex-1 px-4 py-2 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition" id="createProjectBtn">Create Project</button>
+                    <button class="flex-1 px-4 py-2 bg-gray-200 text-gray-900 font-medium rounded-md hover:bg-gray-300 transition" id="cancelBtn">Cancel</button>
+                </div>
             </div>
         `;
 
@@ -377,42 +404,59 @@ export class UI {
 
     showAddTodoForm(projectId) {
         this.detailView.innerHTML = `
-            <div class="detail-header">
-                <h2 class="detail-title">New Todo</h2>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Title:*</div>
-                <input type="text" class="detail-input" id="newTodoTitle" placeholder="Todo name">
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Description:</div>
-                <textarea class="detail-textarea" id="newTodoDescription" placeholder="Todo description"></textarea>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Priority:</div>
-                <select class="detail-input" id="newTodoPriority">
-                    <option value="low">Low</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="high">High</option>
-                </select>
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Start Date:</div>
-                <input type="date" class="detail-input" id="newTodoStartDate">
-            </div>
-            
-            <div class="detail-section">
-                <div class="detail-label">Deadline:</div>
-                <input type="date" class="detail-input" id="newTodoDeadline">
-            </div>
-            
-            <div class="detail-actions">
-                <button class="btn-primary" id="createTodoBtn">Create Todo</button>
-                <button class="btn-secondary" id="cancelBtn">Cancel</button>
+            <div class="flex flex-col h-full">
+                <!-- Title Section (inline with underline) -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 pb-2 border-b-2 border-gray-900">
+                        <span class="text-xl font-bold text-gray-900">Title:</span>
+                        <input type="text" class="text-xl flex-1 bg-transparent border-none focus:outline-none font-medium text-gray-900" id="newTodoTitle" placeholder="New Todo Title">
+                    </div>
+                </div>
+
+                <!-- Metadata Section (inline fields) -->
+                <div class="space-y-3 mb-6">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Status:</span>
+                        <select class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="newTodoStatus">
+                            <option value="todo">To Do</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="done">Done</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Priority:</span>
+                        <select class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="newTodoPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Start Date:</span>
+                        <input type="date" class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="newTodoStartDate">
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-900">Deadline:</span>
+                        <input type="date" class="flex-1 bg-transparent border-none focus:outline-none text-gray-700" id="newTodoDeadline">
+                    </div>
+                </div>
+
+                <!-- Horizontal Separator -->
+                <div class="border-b-2 border-gray-900 mb-6"></div>
+                
+                <!-- Description Section -->
+                <div class="flex-1 flex flex-col">
+                    <label class="font-bold text-gray-900 mb-3">Description:</label>
+                    <textarea class="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" id="newTodoDescription" placeholder="Add description here"></textarea>
+                </div>
+                
+                <div class="flex gap-3 mt-6 pt-4 border-t border-gray-200">
+                    <button class="flex-1 px-4 py-2 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition" id="createTodoBtn">Create Todo</button>
+                    <button class="flex-1 px-4 py-2 bg-gray-200 text-gray-900 font-medium rounded-md hover:bg-gray-300 transition" id="cancelBtn">Cancel</button>
+                </div>
             </div>
         `;
 
@@ -499,8 +543,8 @@ export class UI {
 
     clearDetailView() {
         this.detailView.innerHTML = `
-            <div class="empty-state">
-                <p>Select a project or todo to view details</p>
+            <div class="empty-state flex items-center justify-center h-full text-center">
+                <p class="text-gray-500 text-sm">Select a project or todo to view and edit details, or add a new one.</p>
             </div>
         `;
     }
