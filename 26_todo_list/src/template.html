@@ -5,39 +5,86 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Todo List</title>
     </head>
-    <body>
-        <div id="app">
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <div class="sidebar-header">
-                    <h2 class="greeting">▷ Hello [Name]</h2>
-                    <p class="tagline">Make it epic, for all...</p>
-                </div>
-                <nav class="sidebar-nav">
-                    <button class="nav-item active" data-view="projects">Projects</button>
-                    <button class="nav-item" data-view="settings">Settings</button>
-                </nav>
-            </aside>
-
-            <!-- Middle Panel: Projects List -->
-            <main class="middle-panel">
-                <div class="panel-header">
-                    <h2>Projects</h2>
-                    <button class="btn-add" id="addProjectBtn">+ New Project</button>
-                </div>
-                <div class="projects-list" id="projectsList">
-                    <!-- Projects will be rendered here -->
-                </div>
-            </main>
-
-            <!-- Right Panel: Detail View -->
-            <aside class="right-panel">
-                <div class="detail-view" id="detailView">
-                    <div class="empty-state">
-                        <p>Select a project or todo to view details</p>
+    <body class="h-full bg-white">
+        <div class="flex min-h-full flex-col">
+            <!-- Header -->
+            <header class="relative shrink-0 bg-black text-white">
+                <div class="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+                    <img src="https://tailwindcss.com/img/tailwind-mark.svg" alt="App Logo" class="h-8 w-auto" />
+                    <div class="flex items-center gap-x-8">
+                        <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-white">
+                            <span class="sr-only">View notifications</span>
+                            <svg
+                                class="size-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                aria-hidden="true">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                            </svg>
+                        </button>
+                        <a href="#" class="-m-1.5 p-1.5">
+                            <span class="sr-only">Your profile</span>
+                            <img
+                                class="size-8 rounded-full bg-gray-800"
+                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                alt="" />
+                        </a>
                     </div>
                 </div>
-            </aside>
+            </header>
+
+            <!-- 3-column wrapper -->
+            <div class="mx-auto w-full max-w-7xl grow lg:flex xl:px-2">
+                <!-- Left column area -->
+                <div class="flex-1 xl:flex">
+                    <div
+                        class="border-b border-gray-200 px-4 py-6 sm:px-6 lg:pl-8 xl:w-64 xl:shrink-0 xl:border-r xl:border-b-0 xl:pl-6">
+                        <!-- Sidebar -->
+                        <aside class="sidebar">
+                            <div class="sidebar-header">
+                                <h2 class="greeting">▷ Hello [Name]</h2>
+                                <p class="tagline">Make it epic, for all...</p>
+                            </div>
+                            <nav class="sidebar-nav">
+                                <button class="nav-item active" data-view="projects">Projects</button>
+                                <button class="nav-item" data-view="settings">Settings</button>
+                            </nav>
+                        </aside>
+                    </div>
+
+                    <!-- Main area -->
+                    <div class="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
+                        <!-- Middle Panel: Projects List -->
+                        <main class="middle-panel">
+                            <div class="panel-header">
+                                <h2>Projects</h2>
+                                <button class="btn-add" id="addProjectBtn">+ New Project</button>
+                            </div>
+                            <div class="projects-list" id="projectsList">
+                                <!-- Projects will be rendered here -->
+                            </div>
+                        </main>
+                    </div>
+                </div>
+
+                <!-- Right column area -->
+                <div
+                    class="shrink-0 border-t border-gray-200 px-4 py-6 sm:px-6 lg:w-96 lg:border-t-0 lg:border-l lg:pr-8 xl:pr-6">
+                    <!-- Right Panel: Detail View -->
+                    <aside class="right-panel">
+                        <div class="detail-view" id="detailView">
+                            <div class="empty-state">
+                                <p>Select a project or todo to view details</p>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
         </div>
     </body>
 </html>
