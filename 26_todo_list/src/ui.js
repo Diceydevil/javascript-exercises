@@ -127,7 +127,7 @@ export class UI {
 
     renderTodos(todos) {
         if (todos.length === 0) {
-            return '<div class="todo-item" style="cursor: default; color: #95a5a6;">No todos yet</div>';
+            return '<div class="todo-item text-sm text-gray-500 text-right">NO TODOs YET.</div>';
         }
 
         return todos
