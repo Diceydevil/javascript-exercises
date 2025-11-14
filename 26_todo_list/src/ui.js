@@ -89,8 +89,8 @@ export class UI {
 
         if (projects.length === 0) {
             this.projectsList.innerHTML = `
-                <div class="empty-state">
-                    <p>No projects yet. Create one to get started!</p>
+                <div class="flex h-full items-center justify-center text-gray-500">
+                    <p class="text-gray-500">No projects yet. Create one to get started!</p>
                 </div>
             `;
             return;
@@ -103,24 +103,20 @@ export class UI {
                 const toggleIcon = isExpanded ? "📂" : "📁";
 
                 return `
-                <div class="project-item">
-                    <div class="project-header" data-project-id="${project.id}">
-                        <div class="project-info">
-                            <span class="project-toggle ${isExpanded ? "expanded" : ""}">${toggleIcon}</span>
-                            <div class="project-color-dot" style="background-color: ${project.color}"></div>
-                            <span class="project-title">${project.title}</span>
-                            <span class="project-todos-count">${todos.length}</span>
+                <div class="mb-3 bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 transition project-header" data-project-id="${project.id}">
+                        <div class="flex flex-1 items-center gap-3">
+                            <span class="text-xs text-gray-600">${toggleIcon}</span>
+                            <div class="w-3 h-3 rounded-full flex-shrink-0" style="background-color: ${project.color}"></div>
+                            <span class="font-semibold text-gray-900">${project.title}</span>
+                            <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">${todos.length}</span>
                         </div>
-                        <div class="project-actions">
-                            <button class="btn-icon btn-add-todo" data-project-id="${
-                                project.id
-                            }" title="Add todo">➕</button>
-                            <button class="btn-icon btn-delete-project" data-project-id="${
-                                project.id
-                            }" title="Delete project">🗑️</button>
+                        <div class="flex items-center gap-2">
+                            <button class="btn-add-todo p-1 text-gray-500 hover:text-blue-600 transition" data-project-id="${project.id}" title="Add todo">➕</button>
+                            <button class="btn-delete-project p-1 text-gray-500 hover:text-red-600 transition" data-project-id="${project.id}" title="Delete project">🗑️</button>
                         </div>
                     </div>
-                    <div class="todos-list ${isExpanded ? "expanded" : ""}">
+                    <div class="${isExpanded ? "block" : "hidden"} mx-4 my-2 text-sm">
                         ${this.renderTodos(todos)}
                     </div>
                 </div>
@@ -137,15 +133,15 @@ export class UI {
         return todos
             .map(
                 (todo) => `
-            <div class="todo-item" data-todo-id="${todo.id}">
+            <div class="todo-item flex items-center gap-3 p-2" data-todo-id="${todo.id}">
                 <input 
                     type="checkbox" 
-                    class="todo-checkbox" 
+                    class="w-4 h-4 text-black bg-gray-100 border-gray-300 rounded focus:outline-none flex-shrink-0 accent-black" 
                     data-todo-id="${todo.id}"
                     ${todo.status === "done" ? "checked" : ""}
                 >
-                <span class="todo-title ${todo.status === "done" ? "completed" : ""}">${todo.title}</span>
-                <span class="todo-priority ${todo.priority}">${todo.priority}</span>
+                <span class="flex-1 text-sm font-medium text-gray-900 ${todo.status === "done" ? "line-through text-gray-500" : ""}">${todo.title}</span>
+                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded-full flex-shrink-0 ${todo.priority === "high" ? "bg-red-100 font-bold" : todo.priority === "medium" ? "bg-yellow-100 font-bold" : "bg-green-100 font-bold"}">${todo.priority}</span>
             </div>
         `
             )
