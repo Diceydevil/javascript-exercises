@@ -46,41 +46,50 @@
                     <div
                         class="border-b border-gray-200 px-4 py-6 sm:px-6 lg:pl-8 xl:w-64 xl:shrink-0 xl:border-b-0 xl:border-r xl:pl-6">
                         <!-- Expandable Hello [Name] -->
-                        <details class="group" open>
-                            <summary class="flex cursor-pointer list-none text-xl font-bold">
-                                <span class="inline-block transition-transform group-open:rotate-90">▷</span>
-                                Hello [Name]
-                            </summary>
-                            <!-- Navigation Buttons -->
-                            <nav class="ml-4 mt-4 flex flex-col">
-                                <button class="nav-item text-left" data-view="projects">Projects</button>
-                                <button class="nav-item text-left" data-view="settings">Settings</button>
-                            </nav>
-                        </details>
+                        <aside class="sidebar-header flex h-full flex-col">
+                            <div class="flex h-full items-center justify-center text-center">
+                                <details class="group" open>
+                                    <summary class="flex cursor-pointer list-none text-xl font-bold">
+                                        <span class="inline-block transition-transform group-open:rotate-90">▷</span>
+                                        Hello [Name]
+                                    </summary>
+                                    <!-- Navigation Buttons -->
+                                    <nav class="ml-4 mt-4 flex flex-col">
+                                        <button class="nav-item text-left" data-view="projects">Projects</button>
+                                        <button class="nav-item text-left" data-view="settings">Settings</button>
+                                    </nav>
+                                </details>
+                            </div>
+                        </aside>
                     </div>
 
                     <!-- Middle column: Projects List -->
                     <div class="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
-                        <main class="middle-panel">
-                            <div class="flex items-center justify-between px-2 py-4 border-b border-gray-200 bg-white">
-                                <h2 class="text-2xl font-bold text-gray-900 text-left">Projects</h2>
-                                <button class="rounded bg-black text-white px-4 py-2 text-right" id="addProjectBtn">
-                                    + New Project
-                                </button>
+                        <main class="flex h-full flex-col">
+                            <div class="flex h-full flex-col justify-center text-center">
+                                <div class="flex items-center justify-between border-b border-gray-200 px-2 py-4">
+                                    <h2 class="text-left text-2xl font-bold text-gray-900">Projects</h2>
+                                    <button class="rounded bg-black px-4 py-2 text-right text-white" id="addProjectBtn">
+                                        + New Project
+                                    </button>
+                                </div>
+                                <div class="flex-1 overflow-y-auto p-4" id="projectsList">
+                                    <!-- Projects will be rendered here -->
+                                </div>
                             </div>
                         </main>
-                    <div class="flex-1 overflow-y-auto bg-gray-50 p-4" id="projectsList">
-                        <!-- Projects will be rendered here -->
                     </div>
                 </div>
 
                 <!-- Right column: Detail View -->
                 <div
                     class="shrink-0 border-t border-gray-200 px-4 py-6 sm:px-6 lg:w-96 lg:border-l lg:border-t-0 lg:pr-8 xl:pr-6">
-                    <aside class="right-panel flex flex-col h-full">
+                    <aside class="right-panel flex h-full flex-col">
                         <div class="detail-view flex-1 overflow-y-auto p-6" id="detailView">
-                            <div class="empty-state flex items-center justify-center h-full text-center">
-                                <p class="text-gray-500 text-sm">Select a project or todo to view and edit details, or add a new one.</p>
+                            <div class="empty-state flex h-full items-center justify-center text-center">
+                                <p class="text-sm text-gray-500">
+                                    Select a project or todo to view and edit details, or add a new one.
+                                </p>
                             </div>
                         </div>
                     </aside>
