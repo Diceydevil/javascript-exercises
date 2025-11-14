@@ -136,11 +136,11 @@ export class UI {
             <div class="todo-item flex items-center gap-3 p-2" data-todo-id="${todo.id}">
                 <input 
                     type="checkbox" 
-                    class="w-4 h-4 text-black bg-gray-100 border-gray-300 rounded focus:outline-none flex-shrink-0 accent-black" 
+                    class="todo-checkbox w-4 h-4 text-black bg-gray-100 border-gray-300 rounded focus:outline-none flex-shrink-0 accent-black" 
                     data-todo-id="${todo.id}"
                     ${todo.status === "done" ? "checked" : ""}
                 >
-                <span class="flex-1 text-sm font-medium text-gray-900 ${todo.status === "done" ? "line-through text-gray-500" : ""}">${todo.title}</span>
+                <span class="flex-1 text-sm text-left font-medium text-gray-900 ${todo.status === "done" ? "line-through text-gray-500" : ""}">${todo.title}</span>
                 <span class="text-xs px-2 py-0.5 bg-gray-100 rounded-full flex-shrink-0 ${todo.priority === "high" ? "bg-red-100 font-bold" : todo.priority === "medium" ? "bg-yellow-100 font-bold" : "bg-green-100 font-bold"}">${todo.priority}</span>
             </div>
         `
