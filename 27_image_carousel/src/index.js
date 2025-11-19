@@ -2,12 +2,13 @@ import "./styles.css";
 
 console.log("Carousel: Ready to add interactivity! 🎠");
 
-// STEP 1: Get references to the elements we need
+// Get references to the elements we need
 const carouselContainer = document.getElementById("middle-carousel");
 const carouselNextButton = document.getElementById("middle-next");
 const carouselPrevButton = document.getElementById("middle-prev");
+const carouselDots = document.getElementById("middle-dots");
 
-// STEP 2: Track which slide we're on (start at 0 = first slide)
+// Track which slide we're on (start at 0 = first slide)
 let currentSlide = 0;
 const totalSlides = 3; // We have 3 slides
 
@@ -58,7 +59,7 @@ function resetAutoAdvance() {
     console.log("Auto-advance reset!");
 }
 
-// STEP 3: Function to move to a specific slide
+// Function to move to a specific slide
 function goToSlide(slideIndex) {
     // Calculate how far to move (each slide is 100% width)
     const moveAmount = slideIndex * -100; // -100%, -200%, etc.
@@ -69,11 +70,14 @@ function goToSlide(slideIndex) {
     // Update our current slide tracker
     currentSlide = slideIndex;
 
+    // Update the dots to show active state
+    updateDots();
+
     // Log for debugging
     console.log(`Moved to slide ${currentSlide + 1}, position: ${moveAmount}%`);
 }
 
-// STEP 4: Next button - move to next slide
+// Next button - move to next slide
 carouselNextButton.addEventListener("click", () => {
     console.log("Next button clicked!");
 
@@ -89,7 +93,7 @@ carouselNextButton.addEventListener("click", () => {
     resetAutoAdvance();
 });
 
-// STEP 5: Previous button - move to previous slide
+// Previous button - move to previous slide
 carouselPrevButton.addEventListener("click", () => {
     console.log("Previous button clicked!");
 
@@ -105,5 +109,47 @@ carouselPrevButton.addEventListener("click", () => {
     resetAutoAdvance();
 });
 
-// STEP 6: Initialize auto-advance when page loads
+// Function to create navigation dots
+function createDots() {
+    // Clear any existing dots
+    carouselDots.innerHTML = "";
+
+    // Create one dot for each slide
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement("button");
+        dot.classList.add("h-3", "w-3", "rounded-full", "border", "border-gray-900", "bg-white", "hover:bg-gray-900");
+        carouselDots.appendChild(dot);
+
+        // Add click event listener to each dot
+        dot.addEventListener("click", () => {
+            goToSlide(i);
+            resetAutoAdvance();
+        });
+
+        console.log(`Created dot for slide ${i + 1}`);
+    }
+}
+
+function updateDots() {
+    // Get all dot buttons
+    const dots = carouselDots.querySelectorAll("button");
+
+    // Loop thorugh all dots
+    dots.forEach((dot, index) => {
+        // Remove active state from all dots
+        dot.classList.remove("bg-gray-900");
+
+        // Add active state to the current dot
+        if (index === currentSlide) {
+            dot.classList.add("bg-gray-900");
+        }
+    });
+
+    console.log("Dot ${currentSlide + 1} is now active");
+}
+
+// Initialize auto-advance when page loads
 startAutoAdvance();
+// Initialize createDots function
+createDots();
+updateDots();
