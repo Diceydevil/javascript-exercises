@@ -145,7 +145,7 @@ function updateDots() {
         }
     });
 
-    console.log("Dot ${currentSlide + 1} is now active");
+    console.log(`Dot ${currentSlide + 1} is now active`);
 }
 
 // Initialize auto-advance when page loads
