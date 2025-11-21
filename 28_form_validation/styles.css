@@ -44,7 +44,7 @@ input,
 select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #000000;
+    border: 2px solid #000000;
     border-radius: 4px;
     font-size: 16px;
     transition: border-color 0.3s ease;
@@ -83,4 +83,27 @@ button:hover {
 
 button:active {
     transform: translateY(1px);
+}
+
+/* Validation state styling */
+/* Only show validation states after user interaction */
+input.touched:valid,
+select.touched:valid {
+    border-color: #4CAF50;
+}
+
+input.touched:invalid,
+select.touched:invalid {
+    border-color: #f44336;
+}
+
+/* Alternative approach using focus-within for immediate feedback */
+input:focus:valid,
+select:focus:valid {
+    border-color: #4CAF50;
+}
+
+input:focus:invalid,
+select:focus:invalid {
+    border-color: #f44336;
 }
