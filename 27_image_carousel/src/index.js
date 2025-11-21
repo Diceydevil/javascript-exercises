@@ -115,7 +115,7 @@ function createDots() {
     carouselDots.innerHTML = "";
 
     // Create one dot for each slide
-    for (let i = 0; i < totalSlides; i++) {
+    for (let i = 0; i < totalSlides; i += 1) {
         const dot = document.createElement("button");
         dot.classList.add("h-3", "w-3", "rounded-full", "border", "border-gray-900", "bg-white", "hover:bg-gray-900");
         carouselDots.appendChild(dot);
