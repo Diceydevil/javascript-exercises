@@ -147,3 +147,106 @@ passwordInput.addEventListener('input', function() {
         validatePasswordConfirmation();
     }
 });
+
+// ============================================
+// COUNTRY & POSTAL CODE VALIDATION
+// ============================================
+const countryInput = document.getElementById('country');
+const countryError = countryInput.nextElementSibling;
+const postalCodeInput = document.getElementById('postal-code');
+const postalCodeError = postalCodeInput.nextElementSibling;
+
+// Define postal code patterns for each country
+const postalCodePatterns = {
+    us: {
+        pattern: /^\d{5}(-\d{4})?$/,
+        example: '12345 or 12345-6789',
+        message: 'US ZIP code must be 5 digits (e.g., 12345) or 5+4 format (e.g., 12345-6789)'
+    },
+    ca: {
+        pattern: /^[A-Z]\d[A-Z] \d[A-Z]\d$/i,
+        example: 'A1A 1A1',
+        message: 'Canadian postal code must be in format: A1A 1A1 (letter, digit, letter, space, digit, letter, digit)'
+    },
+    uk: {
+        pattern: /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i,
+        example: 'SW1A 1AA or M1 1AA',
+        message: 'UK postal code format: SW1A 1AA or M1 1AA'
+    },
+    au: {
+        pattern: /^\d{4}$/,
+        example: '2000',
+        message: 'Australian postal code must be 4 digits (e.g., 2000)'
+    }
+};
+
+// Validate country selection
+
+function validateCountry() {
+    if (countryInput.validity.valueMissing) {
+        countryError.textContent = 'Please select a country.';
+        countryInput.setCustomValidity('Please select a country.');
+        countryInput.classList.add('touched');
+        return false;
+    }
+
+    countryError.textContent = '';
+    countryInput.setCustomValidity('');
+    countryInput.classList.remove('touched');
+    return true;
+
+};
+
+// Validate postal code based on selected country
+function validatePostalCode() {
+    const selectedCountry = countryInput.value;
+    const postalCode = postalCodeInput.value;
+
+    // Check if empty first
+    if (postalCodeInput.validity.valueMissing) {
+        postalCodeError.textContent = 'Postal code is required.';
+        postalCodeInput.setCustomValidity('Postal code is required.');
+        postalCodeInput.classList.add('touched');
+        return false;
+    }
+
+    // Check if country is selected
+    if (!selectedCountry) {
+        postalCodeError.textContent = 'Please select a country first.';
+        postalCodeInput.setCustomValidity('Please select a country first.');
+        postalCodeInput.classList.add('touched');
+        return false;
+    }
+
+    // Get the pattern for the selected country
+    const countryPattern = postalCodePatterns[selectedCountry];
+
+    // Validate against country-specific pattern
+    if (!countryPattern.pattern.test(postalCode)) {
+        postalCodeError.textContent = countryPattern.message;
+        postalCodeInput.setCustomValidity(countryPattern.message);
+        postalCodeInput.classList.add('touched');
+        return false;
+    }
+    
+    // Valid!
+    postalCodeError.textContent = '';
+    postalCodeInput.setCustomValidity('');
+    postalCodeInput.classList.remove('touched');
+    return true;
+    
+};
+
+// Attach event listeners
+countryInput.addEventListener('change', validateCountry);
+countryInput.addEventListener('blur', validateCountry);
+
+postalCodeInput.addEventListener('input', validatePostalCode);
+postalCodeInput.addEventListener('blur', validatePostalCode);
+
+// When country changes, re-validate postal code (it might now be invalid!)
+countryInput.addEventListener('change', function() {
+    if (postalCodeInput.value.length > 0) {
+        validatePostalCode();
+    }
+});
