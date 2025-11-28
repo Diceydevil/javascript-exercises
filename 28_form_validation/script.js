@@ -102,3 +102,48 @@ emailInput.addEventListener('blur', validateEmail);
 
 // Also validate on input (as they type)
 emailInput.addEventListener('input', validateEmail);
+
+// ============================================
+// PASSWORD CONFIRMATION VALIDATION
+// ============================================
+const passwordConfirmInput = document.getElementById('password-confirm');
+const passwordConfirmError = passwordConfirmInput.nextElementSibling;
+
+function validatePasswordConfirmation() {
+    const password = passwordInput.value;
+    const passwordConfirm = passwordConfirmInput.value;
+    
+    // First check if it's empty (required field)
+    if (passwordConfirmInput.validity.valueMissing) {
+        passwordConfirmError.textContent = 'Please confirm your password.';
+        passwordConfirmInput.setCustomValidity('Please confirm your password.');
+        passwordConfirmInput.classList.add('touched');
+        return false;
+    }
+    
+    // Check if passwords match
+    if (password !== passwordConfirm) {
+        passwordConfirmError.textContent = 'Passwords do not match.';
+        passwordConfirmInput.setCustomValidity('Passwords do not match.');
+        passwordConfirmInput.classList.add('touched');
+        return false;
+    }
+    
+    // Passwords match!
+    passwordConfirmError.textContent = '';
+    passwordConfirmInput.setCustomValidity('');
+    passwordConfirmInput.classList.remove('touched');
+    return true;
+}
+
+// Validate when user types in confirmation field
+passwordConfirmInput.addEventListener('input', validatePasswordConfirmation);
+passwordConfirmInput.addEventListener('blur', validatePasswordConfirmation);
+
+// IMPORTANT: Also validate confirmation when original password changes!
+passwordInput.addEventListener('input', function() {
+    // If confirmation field has content, re-validate it
+    if (passwordConfirmInput.value.length > 0) {
+        validatePasswordConfirmation();
+    }
+});
