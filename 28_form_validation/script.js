@@ -26,6 +26,37 @@ function validateEmail() {
 }
 
 // ============================================
+// NAME VALIDATION
+// ============================================
+const nameInput = document.getElementById('name');
+const nameError = nameInput.nextElementSibling;
+
+function validateName() {
+    if (nameInput.validity.valueMissing) {
+        nameError.textContent = 'Name is required.';
+        nameInput.setCustomValidity('Name is required.');
+        nameInput.classList.add('touched');
+        return false;
+    }
+    
+    // Optional: check minimum length
+    if (nameInput.value.trim().length < 2) {
+        nameError.textContent = 'Name must be at least 2 characters.';
+        nameInput.setCustomValidity('Name must be at least 2 characters.');
+        nameInput.classList.add('touched');
+        return false;
+    }
+    
+    nameError.textContent = '';
+    nameInput.setCustomValidity('');
+    nameInput.classList.remove('touched');
+    return true;
+}
+
+nameInput.addEventListener('blur', validateName);
+nameInput.addEventListener('input', validateName);
+
+// ============================================
 // PASSWORD VALIDATION
 // ============================================
 const passwordInput = document.getElementById('password');
@@ -250,3 +281,91 @@ countryInput.addEventListener('change', function() {
         validatePostalCode();
     }
 });
+
+// ============================================
+// FORM SUBMISSION VALIDATION
+// ============================================
+
+const form = document.getElementById('registrationForm');
+
+form.addEventListener('submit', function(e) {
+    // Always prevent default submission
+    e.preventDefault();
+
+    console.log('Form submission attempted ...');
+
+    // Validate All fields (even if user didn't interact with them)
+    const nameValid = validateName(); // You'll need to add this
+    const emailValid = validateEmail();
+    const countryValid = validateCountry();
+    const postalCodeValid = validatePostalCode();
+    const passwordValid = validatePassword();
+    const passwordConfirmValid = validatePasswordConfirmation();
+
+    // Check if ALL validations passed
+    if (nameValid && emailValid && countryValid && postalCodeValid && passwordValid && passwordConfirmValid) {
+        // SUCCESS! All fields are valid
+        console.log('Form is valid! Submitting...');
+
+        // Collect form data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: emailInput.value,
+            country: countryInput.value,
+            postalCode: postalCodeInput.value,
+            password: passwordInput.value,
+            passwordConfirm: passwordConfirmInput.value,
+        };
+
+        console.log('Form data:', formData);
+
+        // Show success message
+        displaySuccessMessage();
+    } else {
+        // FAILURE! Some fields are invalid
+        console.log('Form is invalid. Please fix the errors.');
+
+        // Find the first invalid field and focus it
+        const firstInvalidField = form.querySelector('.touched');
+        if (firstInvalidField) {
+            firstInvalidField.focus();
+            firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+});
+
+// Display success message
+function displaySuccessMessage() {
+    // Create success div
+    const successDiv = document.createElement('div');
+    successDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #4CAF50;
+        color: white;
+        padding: 30px 50px;
+        border-radius: 8px;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        z-index: 1000;
+        text-align: center;
+    `;
+    successDiv.innerHTML = `
+        🙌 High Five! 🙌<br>
+        <span style="font-size: 18px; font-weight: normal;">Form submitted successfully!</span>
+    `;
+    
+    document.body.appendChild(successDiv);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        successDiv.remove();
+        // Optionally reset the form
+        // form.reset();
+    }, 3000);
+}
+
+
