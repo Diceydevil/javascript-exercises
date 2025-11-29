@@ -1,11 +1,26 @@
-console.log("First");
+const apiKey = "6db62cc22ee03fd18fbdf5dd412c27d0";
+const city = "Bournemouth";
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-console.log("Starting slow operation...");
-// Simulate a slow operation with a loop
-let endTime = Date.now() + 3000; // 3 seconds from now
-while (Date.now() < endTime) {
-    // Do nothing, just wait
-}
-console.log("Slow operation completed!");
+console.log("Fetching weather data for", city);
 
-console.log("Third");
+fetch(url)
+    .then(function(response) {
+        console.log("Response status:", response.status);
+        if (!response.ok) {
+            throw new Error("API key not activated yet or invalid");
+        }
+        return response.json();
+    })
+    .then(function(data) {
+        console.log("Weather data:", data);
+        console.log("Temperature:", data.main.temp + "°C");
+        console.log("Weather:", data.weather[0].description);
+        console.log("Humidity:", data.main.humidity + "%");
+        console.log("Wind speed:", data.wind.speed + " m/s");
+    })
+    .catch(function(error) {
+        console.error("Error:", error);
+    });
+
+console.log("Request sent!");
