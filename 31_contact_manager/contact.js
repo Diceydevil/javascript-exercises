@@ -13,4 +13,9 @@ const contact1 = {
   },
 };
 
+let randomVariable = "firstName";
+
 contact1.displayInfo();
+console.log("Keys:", Object.keys(contact1));
+console.log("Values:", Object.values(contact1));
+console.log("Entries:", Object.entries(contact1));
