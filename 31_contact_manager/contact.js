@@ -13,22 +13,22 @@ const contact1 = {
   },
 };
 
-contact1.displayInfo();
-console.log("Keys:", Object.keys(contact1));
-console.log("Values:", Object.values(contact1));
-console.log("Entries:", Object.entries(contact1));
+const contact2 = {
+  firstName: "Jane",
+  lastName: "Smith",
+  email: "jane.smith@gmail.com",
+  phone: "555-5678",
+};
 
-console.log("\n--- Object.assign() ---");
+const contact3 = {
+  firstName: "Bob",
+  lastName: "Johnson",
+  email: "bob.j@yahoo.com",
+  phone: "555-9999",
+};
 
-// Create a shallow copy of the contact1 object
-const contact2 = Object.assign({}, contact1);
-contact2.firstName = "Jane";
+const contacts = [contact1, contact2, contact3];
 
-console.log("Original:", contact1.firstName);
-console.log("Copy:", contact2.firstName);
-
-// Merge objects
-const additionalInfo = { age: 30, city: "New York" };
-const fullContact = Object.assign({}, contact1, additionalInfo);
-
-console.log("Merged Contact:", fullContact);
+console.log("Total contacts:", contacts.length);
+console.log("First contact:", contacts[0].firstName);
+console.log("All contacts:", contacts);
