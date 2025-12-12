@@ -32,3 +32,23 @@ const contacts = [contact1, contact2, contact3];
 console.log("Total contacts:", contacts.length);
 console.log("First contact:", contacts[0].firstName);
 console.log("All contacts:", contacts);
+
+console.log("\n --- Looping through contacts ---");
+
+// Method 1: for...of loop (modern, clean)
+console.log("Using for...of:");
+for (const contact of contacts) {
+  console.log(`${contact.firstName} ${contact.lastName} - ${contact.email}`);
+}
+
+// Method 2: forEach (functional approach)
+console.log("\nUsing forEach:");
+contacts.forEach((contact) => {
+  console.log(`${contact.firstName} ${contact.lastName} - ${contact.email}`);
+});
+
+// Method 3: Traditional for loop (when you need index)
+console.log("\nUsing traditional for loop:");
+for (let i = 0; i < contacts.length; i++) {
+  console.log(`Contact ${i + 1}: ${contacts[i].firstName}`);
+}
