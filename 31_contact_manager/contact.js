@@ -76,3 +76,38 @@ const simplifiedContacts = contacts.map((contact) => ({
 }));
 
 console.log("Simplified contacts:", simplifiedContacts);
+
+console.log("\n --- filter() Method ---");
+
+// Filter contacts with Gmail addresses
+const gmailContacts = contacts.filter((contact) =>
+  contact.email.includes("gmail")
+);
+console.log(
+  "Gmail contacts:",
+  gmailContacts.map((contact) => contact.email)
+);
+
+// Filter by name length
+const ContactNameLength = contacts.filter(
+  (contact) => (contact.firstName + " " + contact.lastName).length > 10
+);
+console.log(
+  "Contacts with name length greater than 10:",
+  ContactNameLength.map((contact) => contact.firstName + " " + contact.lastName)
+);
+
+// Filter using multiple conditions
+const specificContacts = contacts.filter((contact) => {
+  return contact.firstName.startsWith("J") && contact.email.includes(".com");
+});
+console.log(
+  "Names starting with J and .com emails:",
+  specificContacts.map((contact) => contact.firstName)
+);
+
+// Check what filter returns when nothing matches
+const noMatch = contacts.filter(
+  (contact) => contact.firstName === "NonExisitent"
+);
+console.log("No matches found:", noMatch);
