@@ -52,3 +52,27 @@ console.log("\nUsing traditional for loop:");
 for (let i = 0; i < contacts.length; i++) {
   console.log(`Contact ${i + 1}: ${contacts[i].firstName}`);
 }
+
+console.log("\n --- map() Method ---");
+
+// Extract just the first names
+const firstNames = contacts.map((contact) => contact.firstName);
+console.log("First names:", firstNames);
+
+// Extract full name strings
+const fullNames = contacts.map(
+  (contact) => `${contact.firstName} ${contact.lastName}`
+);
+console.log("Full names:", fullNames);
+
+// Transform to email domains
+const domains = contacts.map((contact) => contact.email.split("@")[1]);
+console.log("Email domains:", domains);
+
+// Create simplified objects
+const simplifiedContacts = contacts.map((contact) => ({
+  name: `${contact.firstName} ${contact.lastName}`,
+  email: contact.email,
+}));
+
+console.log("Simplified contacts:", simplifiedContacts);
