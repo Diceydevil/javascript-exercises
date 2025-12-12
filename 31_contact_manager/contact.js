@@ -111,3 +111,31 @@ const noMatch = contacts.filter(
   (contact) => contact.firstName === "NonExisitent"
 );
 console.log("No matches found:", noMatch);
+
+console.log("\n --- find() and findIndex() Methods ---");
+
+// find first contact with gmail
+const firstGmail = contacts.find((contact) => contact.email.includes("gmail"));
+console.log("First Gmail contact:", firstGmail.firstName);
+
+// find contact by exact name
+const bob = contacts.find((contact) => contact.firstName === "Bob");
+console.log("Found Bob:", bob);
+
+// find something that doen't exists
+const notFound = contacts.find((contact) => contact.firstName === "Zara");
+console.log("Looking for Zara:", notFound);
+
+// Get INDEX of first gmail contact
+const gmailIndex = contacts.findIndex((contact) =>
+  contact.email.includes("gmail")
+);
+console.log("Index of first Gmail contact:", gmailIndex);
+
+// Get INDEX of non-existent contact
+const notFoundIndex = contacts.findIndex(
+  (contact) => contact.firstName === "Zara"
+);
+console.log("Index of Zara:", notFoundIndex);
+
+console.log;
