@@ -171,3 +171,32 @@ console.log(
   "Original order unchanged:",
   contacts.map((contact) => contact.firstName)
 );
+
+console.log("\n--- reduce() Method ---");
+
+// Example 1: Count total characters in all first names
+const totalChars = contacts.reduce((accumulator, contact) => {
+  return accumulator + contact.firstName.length;
+}, 0);
+console.log("Total characters in all first names:", totalChars);
+
+// Example 2: Count contacts by email domain
+const domainCount = contacts.reduce((acc, contact) => {
+  const domain = contact.email.split("@")[1];
+  acc[domain] = (acc[domain] || 0) + 1;
+  return acc;
+}, {});
+console.log("Contacts per domain:", domainCount);
+
+// Example 3: Build lookup object by first name
+const contactLookup = contacts.reduce((acc, contact) => {
+  acc[contact.firstName] = contact;
+  return acc;
+}, {});
+console.log("Lookup John's email:", contactLookup.John.email);
+
+// Example 4: Concatenate all names into a string
+const allNames = contacts.reduce((acc, contact, index) => {
+  return acc + (index > 0 ? ", " : "") + contact.firstName;
+}, "");
+console.log("All names:", allNames);
