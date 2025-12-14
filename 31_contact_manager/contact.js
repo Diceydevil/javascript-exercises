@@ -138,4 +138,36 @@ const notFoundIndex = contacts.findIndex(
 );
 console.log("Index of Zara:", notFoundIndex);
 
-console.log;
+console.log("\n --- sort() Method ---");
+// Create a copy first (since sort mutates!)
+const sortedByFirstName = [...contacts].sort((a, b) => {
+  return a.firstName.localeCompare(b.firstName);
+});
+console.log(
+  "Sorted by first name:",
+  sortedByFirstName.map((contact) => contact.firstName)
+);
+
+// Sort by last name
+const sortedByLastName = [...contacts].sort((a, b) => {
+  return a.lastName.localeCompare(b.lastName);
+});
+console.log(
+  "Sorted by last name:",
+  sortedByLastName.map((contact) => contact.lastName)
+);
+
+// Reverse alphavetical
+const reverseSorted = [...contacts].sort((a, b) => {
+  return b.firstName.localeCompare(a.firstName);
+});
+console.log(
+  "Reverse alphabetical:",
+  reverseSorted.map((contact) => contact.firstName)
+);
+
+// Check original is unchanged
+console.log(
+  "Original order unchanged:",
+  contacts.map((contact) => contact.firstName)
+);
