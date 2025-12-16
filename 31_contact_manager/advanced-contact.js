@@ -97,3 +97,56 @@ console.log(
 
 const results4 = searchContacts(contacts, "xyz");
 console.log("Search 'xyz' (no match):", results4);
+
+console.log("\n--- CRUD Operations ---");
+
+// Make a working copy for CRUD operations
+let contactList = [...contacts];
+
+// CREATE - Add a new contact
+function addContact(list, newContact) {
+  return [...list, newContact];
+}
+
+const newPerson = {
+  firstName: "Emma",
+  lastName: "Wilson",
+  email: "emma@example.com",
+  phone: "555-3333",
+  age: 22,
+};
+
+contactList = addContact(contactList, newPerson);
+console.log(
+  "After adding Emma:",
+  contactList.map((contact) => contact.firstName)
+);
+
+// READ - Find a specific contact
+function getContactByEmail(list, email) {
+  return list.find((contact) => contact.email === email);
+}
+
+const found = getContactByEmail(contactList, "emma@example.com");
+console.log("Found contact:", found ? `${found.firstName} ${found.lastName}` : "Not found");
+
+// UPDATE - Modify a contact's information
+function updateContact(list, email, updates) {
+  return list.map((contact) => (contact.email === email ? { ...contact, ...updates } : contact));
+}
+
+contactList = updateContact(contactList, "emma@example.com", { age: 30, phone: "555-4444" });
+const updated = getContactByEmail(contactList, "emma@example.com");
+console.log("After update:", `${updated.firstName} - age: ${updated.age}, phone: ${updated.phone}`);
+
+// DELETE - Remove a contact
+function deleteContact(list, email) {
+  return list.filter((contact) => contact.email !== email);
+}
+
+contactList = deleteContact(contactList, "emma@example.com");
+console.log(
+  "After deleting Emma:",
+  contactList.map((contact) => contact.firstName)
+);
+console.log("Final count:", contactList.length);
