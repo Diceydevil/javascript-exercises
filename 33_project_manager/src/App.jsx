@@ -4,20 +4,33 @@ import ProjectCard from "./components/ProjectCard";
 
 function App() {
   const projects = [
-    { id: 1, title: "Project 1", description: "Project description" },
-    { id: 2, title: "Project 2", description: "Project 2 description" },
-    { id: 3, title: "Project 3", description: "Project 3 description" },
+    {
+      id: 1,
+      title: "Website Redesign",
+      description: "Redesign company website",
+    },
+    {
+      id: 2,
+      title: "Mobile App",
+      description: "Build mobile application",
+    },
   ];
   return (
-    <div className="min-h-screen bg-gray-300">
+    <div className="min-h-screen">
       <Header />
-      {projects.map((project) => (
-        <ProjectCard
-          key={project.id}
-          title={project.title}
-          description={project.description}
-        />
-      ))}
+      {projects.length === 0 ? (
+        <p className="text-center text-gray-600 mt-8">
+          No projects yet. Add your first project!
+        </p>
+      ) : (
+        projects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            title={project.title}
+            description={project.description}
+          />
+        ))
+      )}
     </div>
   );
 }
