@@ -41,7 +41,9 @@ console.log("--- Method Chaining ---");
 // Example 1: Get emails of all Gmail users, sorted
 const gmailEmails = contacts
   .filter((contact) => contact.email.includes("gmail"))
-  .sort((firstContact, secondContact) => firstContact.email.localeCompare(secondContact.email))
+  .sort((firstContact, secondContact) =>
+    firstContact.email.localeCompare(secondContact.email)
+  )
   .map((contact) => contact.email);
 
 console.log("Gmail emails (sorted by name):", gmailEmails);
@@ -128,16 +130,27 @@ function getContactByEmail(list, email) {
 }
 
 const found = getContactByEmail(contactList, "emma@example.com");
-console.log("Found contact:", found ? `${found.firstName} ${found.lastName}` : "Not found");
+console.log(
+  "Found contact:",
+  found ? `${found.firstName} ${found.lastName}` : "Not found"
+);
 
 // UPDATE - Modify a contact's information
 function updateContact(list, email, updates) {
-  return list.map((contact) => (contact.email === email ? { ...contact, ...updates } : contact));
+  return list.map((contact) =>
+    contact.email === email ? { ...contact, ...updates } : contact
+  );
 }
 
-contactList = updateContact(contactList, "emma@example.com", { age: 30, phone: "555-4444" });
+contactList = updateContact(contactList, "emma@example.com", {
+  age: 30,
+  phone: "555-4444",
+});
 const updated = getContactByEmail(contactList, "emma@example.com");
-console.log("After update:", `${updated.firstName} - age: ${updated.age}, phone: ${updated.phone}`);
+console.log(
+  "After update:",
+  `${updated.firstName} - age: ${updated.age}, phone: ${updated.phone}`
+);
 
 // DELETE - Remove a contact
 function deleteContact(list, email) {
