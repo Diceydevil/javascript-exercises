@@ -17,10 +17,14 @@ function App() {
   ]);
 
   const handleAddProject = () => {
+    const maxId =
+      projects.length > 0
+        ? Math.max(...projects.map((project) => project.id))
+        : 0;
     const newProject = {
-      id: projects.length + 1,
+      id: maxId + 1,
       title: `Project`,
-      description: `Description for project ${projects.length + 1}`,
+      description: `Description for project ${maxId + 1}`,
     };
     setProjects([...projects, newProject]);
   };
