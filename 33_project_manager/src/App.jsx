@@ -19,10 +19,15 @@ function App() {
   const handleAddProject = () => {
     const newProject = {
       id: projects.length + 1,
-      title: `Project ${projects.length + 1}`,
+      title: `Project`,
       description: `Description for project ${projects.length + 1}`,
     };
     setProjects([...projects, newProject]);
+  };
+
+  const handleDeleteProject = (projectId) => {
+    const newProjects = projects.filter((project) => project.id !== projectId);
+    setProjects(newProjects);
   };
 
   return (
@@ -42,8 +47,10 @@ function App() {
         projects.map((project) => (
           <ProjectCard
             key={project.id}
+            id={project.id}
             title={project.title}
             description={project.description}
+            onDelete={handleDeleteProject}
           />
         ))
       )}
