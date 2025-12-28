@@ -19,7 +19,7 @@ function App() {
   const handleAddProject = () => {
     const maxId =
       projects.length > 0
-        ? Math.max(...projects.map((project) => project.id))
+        ? Math.max(...projects.map((project) => project.id)) // spreated operator in here unpack the array so math.max can read the answers of the .map() method.
         : 0;
     const newProject = {
       id: maxId + 1,
