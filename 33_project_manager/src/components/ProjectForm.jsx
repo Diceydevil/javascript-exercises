@@ -3,15 +3,20 @@ import { useState } from "react";
 function ProjectForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const handleSubmit = () => {
+    const newProject = {
+      title: title,
+      description: description,
+    };
+    console.log("Form submitted with new project:", newProject);
+  };
+
   return (
     <div>
-      {/* Header */}
       <h1 className="text-4xl font-bold mb-8">NEW PROJECT</h1>
-
-      {/* Section Title */}
       <h2 className="text-xl font-bold mb-6">PROJECT DETAILS</h2>
 
-      {/* Project Title */}
       <label className="block mb-2 font-medium">Project Title</label>
       <input
         type="text"
@@ -21,7 +26,6 @@ function ProjectForm() {
         placeholder=""
       />
 
-      {/* Project Description */}
       <label className="block mb-2 font-medium">Project Description</label>
       <textarea
         value={description}
@@ -31,9 +35,9 @@ function ProjectForm() {
         placeholder=""
       />
 
-      {/* Create Project Button */}
       <button
         type="button"
+        onClick={handleSubmit}
         className="bg-black text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
       >
         Create Project
