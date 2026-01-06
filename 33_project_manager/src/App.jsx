@@ -43,13 +43,13 @@ function App() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Left Column - Sidebar (future) */}
-        <div className="w-64 border-r border-gray-200 p-4 bg-gray-50">
+        <div className="w-64 border border-black p-4 mx-2 my-4 rounded-lg">
           <h2 className="font-bold mb-4">Sidebar</h2>
           <p className="text-sm text-gray-500">Future navigation</p>
         </div>
 
         {/* Middle Column - Projects List */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 border border-black overflow-y-auto p-4 mx-2 my-4 rounded-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">Projects</h2>
             <button
@@ -79,7 +79,7 @@ function App() {
         </div>
 
         {/* Right Column - Form/Detail Panel */}
-        <div className="w-96 border-l border-gray-200 p-4 bg-gray-50 overflow-y-auto">
+        <div className="w-96 border border-black p-4 mx-2 my-4 overflow-y-auto rounded-lg">
           {rightPanelView === "empty" && (
             <p className="text-gray-500 text-center mt-8">
               Select a project or add a new one
@@ -91,7 +91,7 @@ function App() {
               <ProjectForm />
               <button
                 onClick={() => setRightPanelView("empty")}
-                className="bg-gray-500 text-white px-3 py-1 rounded mt-4"
+                className="bg-black text-white px-3 py-1 rounded mt-4"
               >
                 Cancel
               </button>
