@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ProjectForm() {
+function ProjectForm(props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -9,7 +9,9 @@ function ProjectForm() {
       title: title,
       description: description,
     };
-    console.log("Form submitted with new project:", newProject);
+    props.onCreateProject(newProject);
+    setTitle("");
+    setDescription("");
   };
 
   return (

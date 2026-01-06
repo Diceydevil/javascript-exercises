@@ -19,22 +19,23 @@ function App() {
   const [rightPanelView, setRightPanelView] = useState("empty");
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const handleAddProject = () => {
-    const maxId =
-      projects.length > 0
-        ? Math.max(...projects.map((project) => project.id)) // spreated operator in here unpack the array so math.max can read the answers of the .map() method.
-        : 0;
-    const newProject = {
-      id: maxId + 1,
-      title: `Project`,
-      description: `Description for project ${maxId + 1}`,
-    };
-    setProjects([...projects, newProject]);
-  };
-
   const handleDeleteProject = (projectId) => {
     const newProjects = projects.filter((project) => project.id !== projectId);
     setProjects(newProjects);
+  };
+
+  const handleCreateProject = (projectData) => {
+    const maxId =
+      projects.length > 0
+        ? Math.max(...projects.map((project) => project.id))
+        : 0;
+    const newProject = {
+      id: maxId + 1,
+      title: projectData.title,
+      description: projectData.description,
+    };
+    setProjects([...projects, newProject]);
+    setRightPanelView("empty");
   };
 
   return (
@@ -88,7 +89,7 @@ function App() {
 
           {rightPanelView === "newProject" && (
             <div>
-              <ProjectForm />
+              <ProjectForm onCreateProject={handleCreateProject} />
               <button
                 onClick={() => setRightPanelView("empty")}
                 className="bg-black text-white px-3 py-1 rounded mt-4"
