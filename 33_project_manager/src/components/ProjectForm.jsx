@@ -1,22 +1,32 @@
 import { useState } from "react";
 
 function ProjectForm(props) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(props.project?.title || "");
+  const [description, setDescription] = useState(
+    props.project?.description || ""
+  );
 
   const handleSubmit = () => {
-    const newProject = {
+    const projectData = {
       title: title,
       description: description,
     };
-    props.onCreateProject(newProject);
+
+    if (props.onSave) {
+      props.onSave(projectData);
+    } else {
+      props.onCreateProject(projectData);
+    }
+
     setTitle("");
     setDescription("");
   };
 
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-8">NEW PROJECT</h1>
+      <h1 className="text-4xl font-bold mb-8">
+        {props.project ? "EDIT PROJECT" : "NEW PROJECT"}
+      </h1>
       <h2 className="text-xl font-bold mb-6">PROJECT DETAILS</h2>
 
       <label className="block mb-2 font-medium">Project Title</label>
@@ -42,7 +52,7 @@ function ProjectForm(props) {
         onClick={handleSubmit}
         className="bg-black text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
       >
-        Create Project
+        {props.project ? "Save Changes" : "Create Project"}
       </button>
     </div>
   );

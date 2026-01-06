@@ -19,11 +19,6 @@ function App() {
   const [rightPanelView, setRightPanelView] = useState("empty");
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const handleDeleteProject = (projectId) => {
-    const newProjects = projects.filter((project) => project.id !== projectId);
-    setProjects(newProjects);
-  };
-
   const handleCreateProject = (projectData) => {
     const maxId =
       projects.length > 0
@@ -36,6 +31,34 @@ function App() {
     };
     setProjects([...projects, newProject]);
     setRightPanelView("empty");
+  };
+
+  const handleDeleteProject = (projectId) => {
+    const newProjects = projects.filter((project) => project.id !== projectId);
+    setProjects(newProjects);
+  };
+
+  const handleEditProject = (projectId) => {
+    const projectToEdit = projects.find((project) => project.id === projectId);
+    setSelectedProject(projectToEdit);
+    setRightPanelView("editProject");
+  };
+
+  const handleUpdateProject = (projectData) => {
+    const updatedProjects = projects.map((project) => {
+      if (project.id === selectedProject.id) {
+        return {
+          ...project,
+          title: projectData.title,
+          description: projectData.description,
+        };
+      }
+      return project;
+    });
+
+    setProjects(updatedProjects);
+    setRightPanelView("empty");
+    setSelectedProject(null);
   };
 
   return (
@@ -74,6 +97,7 @@ function App() {
                 title={project.title}
                 description={project.description}
                 onDelete={handleDeleteProject}
+                onEdit={handleEditProject}
               />
             ))
           )}
@@ -90,6 +114,21 @@ function App() {
           {rightPanelView === "newProject" && (
             <div>
               <ProjectForm onCreateProject={handleCreateProject} />
+              <button
+                onClick={() => setRightPanelView("empty")}
+                className="bg-black text-white px-3 py-1 rounded mt-4"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
+          {rightPanelView === "editProject" && (
+            <div>
+              <ProjectForm
+                project={selectedProject}
+                onSave={handleUpdateProject}
+              />
               <button
                 onClick={() => setRightPanelView("empty")}
                 className="bg-black text-white px-3 py-1 rounded mt-4"
