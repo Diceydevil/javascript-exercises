@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "./components/Header";
 import ProjectCard from "./components/ProjectCard";
 import ProjectForm from "./components/ProjectForm";
+import Footer from "./components/Footer";
 
 function App() {
   const [projects, setProjects] = useState([
@@ -18,6 +19,7 @@ function App() {
   ]);
   const [rightPanelView, setRightPanelView] = useState("empty");
   const [selectedProject, setSelectedProject] = useState(null);
+  const [sortOrder, setSortOrder] = useState("none");
 
   const handleCreateProject = (projectData) => {
     const maxId =
@@ -61,6 +63,20 @@ function App() {
     setSelectedProject(null);
   };
 
+  const handleSortChange = (order) => {
+    setSortOrder(order);
+  };
+
+  const displayedProjects = (() => {
+    if (sortOrder === "asc") {
+      return [...projects].sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOrder === "desc") {
+      return [...projects].sort((a, b) => b.title.localeCompare(a.title));
+    } else {
+      return projects;
+    }
+  })();
+
   return (
     <div className="flex flex-col h-screen">
       <Header />
@@ -68,8 +84,42 @@ function App() {
       <div className="flex flex-1 overflow-hidden">
         {/* Left Column - Sidebar (future) */}
         <div className="w-64 border border-black p-4 mx-2 my-4 rounded-lg">
-          <h2 className="font-bold mb-4">Sidebar</h2>
-          <p className="text-sm text-gray-500">Future navigation</p>
+          <h2 className="font-bold mb-4 text-xl">Sidebar Menu (Practice)</h2>
+
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={() => handleSortChange("none")}
+              className={`px-4 py-2 rounded text-left ${
+                sortOrder === "none"
+                  ? "bg-black text-white"
+                  : "bg-gray-100 hover:bg-gray-200"
+              }`}
+            >
+              Default Order
+            </button>
+
+            <button
+              onClick={() => handleSortChange("asc")}
+              className={`px-4 py-2 rounded text-left ${
+                sortOrder === "asc"
+                  ? "bg-black text-white"
+                  : "bg-gray-100 hover:bg-gray-200"
+              }`}
+            >
+              A → Z
+            </button>
+
+            <button
+              onClick={() => handleSortChange("desc")}
+              className={`px-4 py-2 rounded text-left ${
+                sortOrder === "desc"
+                  ? "bg-black text-white"
+                  : "bg-gray-100 hover:bg-gray-200"
+              }`}
+            >
+              Z → A
+            </button>
+          </div>
         </div>
 
         {/* Middle Column - Projects List */}
@@ -85,12 +135,12 @@ function App() {
           </div>
 
           {/* Projects list goes here */}
-          {projects.length === 0 ? (
+          {displayedProjects.length === 0 ? (
             <p className="text-center text-gray-600 mt-8">
               No projects yet. Add your first project!
             </p>
           ) : (
-            projects.map((project) => (
+            displayedProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 id={project.id}
@@ -139,6 +189,8 @@ function App() {
           )}
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
