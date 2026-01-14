@@ -1,25 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import ProjectCard from "./components/ProjectCard";
 import ProjectForm from "./components/ProjectForm";
 import Footer from "./components/Footer";
 
 function App() {
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      title: "Website Redesign",
-      description: "Redesign company website",
-    },
-    {
-      id: 2,
-      title: "Mobile App",
-      description: "Build mobile application",
-    },
-  ]);
+  const [projects, setProjects] = useState(() => {
+    const savedProjects = localStorage.getItem("projects");
+
+    if (savedProjects) {
+      return JSON.parse(savedProjects);
+    }
+
+    return [
+      {
+        id: 1,
+        title: "Website Redesign",
+        description: "Redesign company website",
+      },
+      {
+        id: 2,
+        title: "Mobile App",
+        description: "Build mobile application",
+      },
+    ];
+  });
   const [rightPanelView, setRightPanelView] = useState("empty");
   const [selectedProject, setSelectedProject] = useState(null);
   const [sortOrder, setSortOrder] = useState("none");
+
+  useEffect(() => {
+    localStorage.setItem("projects", JSON.stringify(projects));
+    console.log("Saved to localStorage:", projects);
+  }, [projects]);
 
   const handleCreateProject = (projectData) => {
     const maxId =
