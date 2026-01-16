@@ -17,11 +17,13 @@ function App() {
         id: 1,
         title: "Website Redesign",
         description: "Redesign company website",
+        assignedStudents: [],
       },
       {
         id: 2,
         title: "Mobile App",
         description: "Build mobile application",
+        assignedStudents: [],
       },
     ];
   });
@@ -74,6 +76,14 @@ function App() {
     setProjects(updatedProjects);
     setRightPanelView("empty");
     setSelectedProject(null);
+  };
+
+  const handleAssignStudents = (projectId) => {
+    const projectToAssign = projects.find(
+      (project) => project.id === projectId
+    );
+    setSelectedProject(projectToAssign);
+    setRightPanelView("assignStudents");
   };
 
   const handleSortChange = (order) => {
@@ -161,6 +171,7 @@ function App() {
                 description={project.description}
                 onDelete={handleDeleteProject}
                 onEdit={handleEditProject}
+                onAssignStudents={handleAssignStudents}
               />
             ))
           )}

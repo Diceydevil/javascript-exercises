@@ -5,6 +5,12 @@ function ProjectCard(props) {
       <p className="text-gray-600">{props.description}</p>
       <div className="absolute top-1/2 right-4 transform -translate-y-1/2 flex gap-2">
         <button
+          onClick={() => props.onAssignStudents(props.id)}
+          className="rounded w-6 h-6 flex items-center justify-center"
+        >
+          <span> ♟</span>
+        </button>
+        <button
           onClick={() => props.onEdit(props.id)}
           className="rounded w-6 h-6 flex items-center justify-center"
         >
