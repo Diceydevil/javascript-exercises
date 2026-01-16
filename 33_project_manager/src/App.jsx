@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import ProjectCard from "./components/ProjectCard";
 import ProjectForm from "./components/ProjectForm";
 import Footer from "./components/Footer";
+import StudentMemoryGame from "./components/StudentMemoryGame";
 
 function App() {
   const [projects, setProjects] = useState(() => {
@@ -203,6 +204,18 @@ function App() {
                 project={selectedProject}
                 onSave={handleUpdateProject}
               />
+              <button
+                onClick={() => setRightPanelView("empty")}
+                className="bg-black text-white px-3 py-1 rounded mt-4"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
+          {rightPanelView === "assignStudents" && (
+            <div>
+              <StudentMemoryGame />
               <button
                 onClick={() => setRightPanelView("empty")}
                 className="bg-black text-white px-3 py-1 rounded mt-4"
