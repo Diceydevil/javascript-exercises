@@ -87,6 +87,21 @@ function App() {
     setRightPanelView("assignStudents");
   };
 
+  const handleSaveAssignedStudents = (students) => {
+    const updatedProjects = projects.map((project) => {
+      if (project.id === selectedProject.id) {
+        return {
+          ...project,
+          assignedStudents: students,
+        };
+      }
+      return project;
+    });
+    setProjects(updatedProjects);
+    setRightPanelView("empty");
+    console.log("Students saved successfully!");
+  };
+
   const handleSortChange = (order) => {
     setSortOrder(order);
   };
@@ -215,7 +230,9 @@ function App() {
 
           {rightPanelView === "assignStudents" && (
             <div>
-              <StudentMemoryGame />
+              <StudentMemoryGame
+                onSaveAssignedStudents={handleSaveAssignedStudents}
+              />
               <button
                 onClick={() => setRightPanelView("empty")}
                 className="bg-black text-white px-3 py-1 rounded mt-4"

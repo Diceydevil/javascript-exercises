@@ -22,6 +22,18 @@ function StudentMemoryGame(props) {
       });
   }, []);
 
+  useEffect(() => {
+    console.log("Game status changed to:", gameStatus);
+
+    if (gameStatus === "You Won!" || gameStatus === "Game Over!") {
+      console.log(
+        "Calling onSaveAssignedStudents with selected students:",
+        selectedStudents
+      );
+      props.onSaveAssignedStudents(selectedStudents);
+    }
+  }, [gameStatus]);
+
   const shuffleStudents = (array) => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
