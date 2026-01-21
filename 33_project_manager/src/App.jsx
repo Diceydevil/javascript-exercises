@@ -188,6 +188,7 @@ function App() {
                 onDelete={handleDeleteProject}
                 onEdit={handleEditProject}
                 onAssignStudents={handleAssignStudents}
+                assignedStudents={project.assignedStudents || []}
               />
             ))
           )}

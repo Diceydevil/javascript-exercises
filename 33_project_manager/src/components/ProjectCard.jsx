@@ -3,6 +3,11 @@ function ProjectCard(props) {
     <div className="bg-white border border-black rounded-lg p-4 m-4 relative">
       <h2 className="text-xl font-bold">{props.title}</h2>
       <p className="text-gray-600">{props.description}</p>
+      {props.assignedStudents && props.assignedStudents.length > 0 && (
+        <p className="text-sm text-blue-600 mt-2">
+          {props.assignedStudents.length} students assigned
+        </p>
+      )}
       <div className="absolute top-1/2 right-4 transform -translate-y-1/2 flex gap-2">
         <button
           onClick={() => props.onAssignStudents(props.id)}
