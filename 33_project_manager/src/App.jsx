@@ -4,6 +4,7 @@ import ProjectCard from "./components/ProjectCard";
 import ProjectForm from "./components/ProjectForm";
 import Footer from "./components/Footer";
 import StudentMemoryGame from "./components/StudentMemoryGame";
+import { Link } from "react-router";
 
 function App() {
   const [projects, setProjects] = useState(() => {
@@ -123,42 +124,30 @@ function App() {
       <div className="flex flex-1 overflow-hidden">
         {/* Left Column - Sidebar (future) */}
         <div className="w-64 border border-black p-4 mx-2 my-4 rounded-lg">
-          <h2 className="font-bold mb-4 text-xl">Sidebar Menu (Practice)</h2>
+          <h2 className="font-bold mb-4 text-xl">Navigation</h2>
 
-          <div className="flex flex-col gap-2">
-            <button
-              onClick={() => handleSortChange("none")}
-              className={`px-4 py-2 rounded text-left ${
-                sortOrder === "none"
-                  ? "bg-black text-white"
-                  : "bg-gray-100 hover:bg-gray-200"
-              }`}
+          <nav className="flex flex-col gap-2">
+            <Link
+              to="/"
+              className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-left"
             >
-              Default Order
-            </button>
+              📋 Projects
+            </Link>
 
-            <button
-              onClick={() => handleSortChange("asc")}
-              className={`px-4 py-2 rounded text-left ${
-                sortOrder === "asc"
-                  ? "bg-black text-white"
-                  : "bg-gray-100 hover:bg-gray-200"
-              }`}
+            <Link
+              to="/pokemon"
+              className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-left"
             >
-              A → Z
-            </button>
+              ⚡ Pokemon
+            </Link>
 
-            <button
-              onClick={() => handleSortChange("desc")}
-              className={`px-4 py-2 rounded text-left ${
-                sortOrder === "desc"
-                  ? "bg-black text-white"
-                  : "bg-gray-100 hover:bg-gray-200"
-              }`}
+            <Link
+              to="/collection"
+              className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-left"
             >
-              Z → A
-            </button>
-          </div>
+              🎒 My Collection
+            </Link>
+          </nav>
         </div>
 
         {/* Middle Column - Projects List */}
