@@ -4,7 +4,7 @@ import ProjectCard from "./components/ProjectCard";
 import ProjectForm from "./components/ProjectForm";
 import Footer from "./components/Footer";
 import StudentMemoryGame from "./components/StudentMemoryGame";
-import { Link } from "react-router";
+import { Link, Outlet } from "react-router";
 
 function App() {
   const [projects, setProjects] = useState(() => {
@@ -128,7 +128,7 @@ function App() {
 
           <nav className="flex flex-col gap-2">
             <Link
-              to="/"
+              to="/projects"
               className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-left"
             >
               📋 Projects
@@ -152,35 +152,15 @@ function App() {
 
         {/* Middle Column - Projects List */}
         <div className="flex-1 border border-black overflow-y-auto p-4 mx-2 my-4 rounded-lg">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">Projects</h2>
-            <button
-              onClick={() => setRightPanelView("newProject")}
-              className="bg-black text-white px-4 py-2 rounded"
-            >
-              + New Project
-            </button>
-          </div>
-
-          {/* Projects list goes here */}
-          {displayedProjects.length === 0 ? (
-            <p className="text-center text-gray-600 mt-8">
-              No projects yet. Add your first project!
-            </p>
-          ) : (
-            displayedProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                id={project.id}
-                title={project.title}
-                description={project.description}
-                onDelete={handleDeleteProject}
-                onEdit={handleEditProject}
-                onAssignStudents={handleAssignStudents}
-                assignedStudents={project.assignedStudents || []}
-              />
-            ))
-          )}
+          <Outlet
+            context={{
+              displayedProjects: displayedProjects,
+              handleDeleteProject: handleDeleteProject,
+              handleEditProject: handleEditProject,
+              handleAssignStudents: handleAssignStudents,
+              setRightPanelView: setRightPanelView,
+            }}
+          />
         </div>
 
         {/* Right Column - Form/Detail Panel */}
