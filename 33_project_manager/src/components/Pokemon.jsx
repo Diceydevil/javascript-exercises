@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import PokemonCard from "./PokemonCard";
+import { useCollection } from "../contexts/CollectionContext";
 
 function Pokemon() {
   const [pokemonList, setPokemonList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { collection } = useCollection();
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=20")
