@@ -15,8 +15,20 @@ function Pokemon() {
         return response.json();
       })
       .then((data) => {
-        setPokemonList(data.results);
-        setLoading(false);
+        const pokemonPromises = data.results.map((pokemon) =>
+          fetch(pokemon.url)
+            .then((response) => response.json())
+            .then((details) => ({
+              name: details.name,
+              image: details.sprites.front_default,
+              id: details.id,
+            }))
+        );
+
+        Promise.all(pokemonPromises).then((pokemonWithDetails) => {
+          setPokemonList(pokemonWithDetails);
+          setLoading(false);
+        });
       })
       .catch((error) => {
         setError(error.message);
