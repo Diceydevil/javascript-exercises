@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PokemonCard from "./PokemonCard";
 
 function Pokemon() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -32,12 +33,7 @@ function Pokemon() {
       {!loading && !error && (
         <div className="grid grid-cols-4 gap-4">
           {pokemonList.map((pokemon) => (
-            <div
-              key={pokemon.name}
-              className="border border-gray-300 rounded-lg p-4 text-center"
-            >
-              <p className="font-semibold capitalize">{pokemon.name}</p>
-            </div>
+            <PokemonCard key={pokemon.name} pokemon={pokemon} />
           ))}
         </div>
       )}
