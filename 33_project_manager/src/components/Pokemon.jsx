@@ -5,6 +5,24 @@ function Pokemon() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=20")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch Pokemon");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setPokemonList(data.results);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">Pokemon Grid</h2>
@@ -12,7 +30,16 @@ function Pokemon() {
       {error && <p className="text-red-600">Error: {error}</p>}
 
       {!loading && !error && (
-        <p className="text-gray-600">{pokemonList.length} Pokemon loaded!</p>
+        <div className="grid grid-cols-4 gap-4">
+          {pokemonList.map((pokemon) => (
+            <div
+              key={pokemon.name}
+              className="border border-gray-300 rounded-lg p-4 text-center"
+            >
+              <p className="font-semibold capitalize">{pokemon.name}</p>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
