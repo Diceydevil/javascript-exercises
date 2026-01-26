@@ -1,6 +1,6 @@
 import { useCollection } from "../contexts/CollectionContext";
 
-function PokemonCard({ pokemon }) {
+function PokemonCard({ pokemon, showAddButton = true, onRemove }) {
   const { handleAddPokemon } = useCollection();
 
   return (
@@ -14,12 +14,24 @@ function PokemonCard({ pokemon }) {
       )}
       <p className="font-semibold capitalize">{pokemon.name}</p>
       <p className="text-sm text-gray-500">#{pokemon.id}</p>
-      <button
-        onClick={() => handleAddPokemon(pokemon)}
-        className="mt-2 bg-black text-white px-4 py-1 rounded hover:bg-gray-800"
-      >
-        Add to Collection
-      </button>
+
+      {showAddButton && (
+        <button
+          onClick={() => handleAddPokemon(pokemon)}
+          className="mt-2 bg-black text-white px-4 py-1 rounded hover:bg-gray-800 w-full"
+        >
+          Add
+        </button>
+      )}
+
+      {onRemove && (
+        <button
+          onClick={() => onRemove(pokemon.id)}
+          className="mt-2 bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 w-full"
+        >
+          Remove
+        </button>
+      )}
     </div>
   );
 }

@@ -21,8 +21,18 @@ export function CollectionProvider({ children }) {
     }
   };
 
+  const handleRemovePokemon = (pokemonId) => {
+    setCollection((prevCollection) =>
+      prevCollection.filter(
+        (selectedPokemon) => selectedPokemon.id !== pokemonId
+      )
+    );
+  };
+
   return (
-    <CollectionContext.Provider value={{ collection, handleAddPokemon }}>
+    <CollectionContext.Provider
+      value={{ collection, handleAddPokemon, handleRemovePokemon }}
+    >
       {children}
     </CollectionContext.Provider>
   );
