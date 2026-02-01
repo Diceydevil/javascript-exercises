@@ -1,5 +1,10 @@
 // Reducer function - centralised state logic
-function projectsReducer(state, action) {}
+function projectsReducer(state, action) {
+  switch (action.type) {
+    default:
+      throw new Error(`Unknown action type: ${action.type}`);
+  }
+}
 import { createContext, useState, useEffect, useContext } from "react";
 
 const ProjectsContext = createContext();
