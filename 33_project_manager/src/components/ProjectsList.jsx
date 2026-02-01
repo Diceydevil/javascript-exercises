@@ -1,14 +1,25 @@
-import { useOutletContext } from "react-router";
 import ProjectCard from "./ProjectCard";
+import { useProjects } from "../contexts/ProjectsContext";
+import { useOutletContext } from "react-router";
 
 function ProjectsList() {
   const {
-    displayedProjects,
+    projects,
     handleDeleteProject,
     handleEditProject,
     handleAssignStudents,
-    setRightPanelView,
-  } = useOutletContext();
+  } = useProjects();
+  const { setRightPanelView } = useOutletContext();
+
+  const handleEditWithPanel = (projectId) => {
+    handleEditProject(projectId);
+    setRightPanelView("editProject");
+  };
+
+  const handleAssignWithPanel = (projectId) => {
+    handleAssignStudents(projectId);
+    setRightPanelView("assignStudents");
+  };
 
   return (
     <div>
@@ -22,20 +33,20 @@ function ProjectsList() {
         </button>
       </div>
 
-      {displayedProjects.length === 0 ? (
+      {projects.length === 0 ? (
         <p className="text-center text-gray-600 mt-8">
           No projects yet. Add your first project!
         </p>
       ) : (
-        displayedProjects.map((project) => (
+        projects.map((project) => (
           <ProjectCard
             key={project.id}
             id={project.id}
             title={project.title}
             description={project.description}
             onDelete={handleDeleteProject}
-            onEdit={handleEditProject}
-            onAssignStudents={handleAssignStudents}
+            onEdit={handleEditWithPanel}
+            onAssignStudents={handleAssignWithPanel}
             assignedStudents={project.assignedStudents || []}
           />
         ))
