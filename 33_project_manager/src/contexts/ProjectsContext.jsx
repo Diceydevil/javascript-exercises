@@ -1,3 +1,5 @@
+// Reducer function - centralised state logic
+function projectsReducer(state, action) {}
 import { createContext, useState, useEffect, useContext } from "react";
 
 const ProjectsContext = createContext();
