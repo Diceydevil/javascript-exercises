@@ -1,6 +1,65 @@
 // Reducer function - centralised state logic
 function projectsReducer(state, action) {
   switch (action.type) {
+    case "DELETE_PROJECT":
+      return {
+        ...state,
+        projects: state.projects.filter(
+          (project) => project.id !== action.projectId
+        ),
+      };
+
+    case "CREATE_PROJECT":
+      const newProject = {
+        id: action.id,
+        title: action.title,
+        description: action.description,
+        assignedStudents: [],
+      };
+      return { ...state, projects: [...state.projects, newProject] };
+
+    case "UPDATE_PROJECT":
+      return {
+        ...state,
+        projects: state.projects.map((project) => {
+          if (project.id === action.projectId) {
+            return {
+              ...project,
+              title: action.title,
+              description: action.description,
+            };
+          }
+          return project;
+        }),
+      };
+
+    case "ASSIGN_STUDENTS":
+      return {
+        ...state,
+        projects: state.projects.map((project) => {
+          if (project.id === action.projectId) {
+            return {
+              ...project,
+              assignedStudents: action.students,
+            };
+          }
+          return project;
+        }),
+      };
+
+    case "SET_SELECTED_PROJECT":
+      return {
+        ...state,
+        selectedProject: state.projects.find(
+          (project) => project.id === action.projectId
+        ),
+      };
+
+    case "CLEAR_SELECTED_PROJECT":
+      return {
+        ...state,
+        selectedProject: null,
+      };
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }
