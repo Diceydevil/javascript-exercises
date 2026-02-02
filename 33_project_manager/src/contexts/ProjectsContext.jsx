@@ -1,7 +1,24 @@
+import {
+  CREATE_PROJECT,
+  DELETE_PROJECT,
+  UPDATE_PROJECT,
+  ASSIGN_STUDENTS,
+  SET_SELECTED_PROJECT,
+  CLEAR_SELECTED_PROJECT,
+} from "./projectActionTypes";
+
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useReducer,
+} from "react";
+
 // Reducer function - centralised state logic
 function projectsReducer(state, action) {
   switch (action.type) {
-    case "DELETE_PROJECT":
+    case DELETE_PROJECT:
       return {
         ...state,
         projects: state.projects.filter(
@@ -9,7 +26,7 @@ function projectsReducer(state, action) {
         ),
       };
 
-    case "CREATE_PROJECT":
+    case CREATE_PROJECT:
       const newProject = {
         id: action.id,
         title: action.title,
@@ -18,7 +35,7 @@ function projectsReducer(state, action) {
       };
       return { ...state, projects: [...state.projects, newProject] };
 
-    case "UPDATE_PROJECT":
+    case UPDATE_PROJECT:
       return {
         ...state,
         projects: state.projects.map((project) => {
@@ -33,7 +50,7 @@ function projectsReducer(state, action) {
         }),
       };
 
-    case "ASSIGN_STUDENTS":
+    case ASSIGN_STUDENTS:
       return {
         ...state,
         projects: state.projects.map((project) => {
@@ -47,7 +64,7 @@ function projectsReducer(state, action) {
         }),
       };
 
-    case "SET_SELECTED_PROJECT":
+    case SET_SELECTED_PROJECT:
       return {
         ...state,
         selectedProject: state.projects.find(
@@ -55,7 +72,7 @@ function projectsReducer(state, action) {
         ),
       };
 
-    case "CLEAR_SELECTED_PROJECT":
+    case CLEAR_SELECTED_PROJECT:
       return {
         ...state,
         selectedProject: null,
@@ -64,105 +81,67 @@ function projectsReducer(state, action) {
       throw new Error(`Unknown action type: ${action.type}`);
   }
 }
-import { createContext, useState, useEffect, useContext } from "react";
 
 const ProjectsContext = createContext();
 
 export function ProjectsProvider({ children }) {
-  const [projects, setProjects] = useState(() => {
-    const savedProjects = localStorage.getItem("projects");
-
-    if (savedProjects) {
-      return JSON.parse(savedProjects);
-    }
-
-    return [
-      {
-        id: 1,
-        title: "Website Redesign",
-        description: "Redesign company website",
-        assignedStudents: [],
-      },
-      {
-        id: 2,
-        title: "Mobile App",
-        description: "Build mobile application",
-        assignedStudents: [],
-      },
-    ];
+  const [state, dispatch] = useReducer(projectsReducer, {
+    projects: [],
+    selectedProject: null,
   });
-  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem("projects", JSON.stringify(projects));
-  }, [projects]);
+    localStorage.setItem("projects", JSON.stringify(state.projects));
+  }, [state.projects]);
 
   const handleCreateProject = (projectData) => {
     const maxId =
-      projects.length > 0
-        ? Math.max(...projects.map((project) => project.id))
+      state.projects.length > 0
+        ? Math.max(...state.projects.map((project) => project.id))
         : 0;
-    const newProject = {
+    dispatch({
+      type: CREATE_PROJECT,
       id: maxId + 1,
       title: projectData.title,
       description: projectData.description,
-    };
-    setProjects([...projects, newProject]);
+    });
   };
 
   const handleDeleteProject = (projectId) => {
-    const newProjects = projects.filter((project) => project.id !== projectId);
-    setProjects(newProjects);
+    dispatch({ type: DELETE_PROJECT, projectId: projectId });
   };
 
   const handleEditProject = (projectId) => {
-    const projectToEdit = projects.find((project) => project.id === projectId);
-    setSelectedProject(projectToEdit);
+    dispatch({ type: SET_SELECTED_PROJECT, projectId: projectId });
   };
 
   const handleUpdateProject = (projectData) => {
-    const updatedProjects = projects.map((project) => {
-      if (project.id === selectedProject.id) {
-        return {
-          ...project,
-          title: projectData.title,
-          description: projectData.description,
-        };
-      }
-      return project;
+    dispatch({
+      type: UPDATE_PROJECT,
+      projectId: state.selectedProject.id,
+      title: projectData.title,
+      description: projectData.description,
     });
-
-    setProjects(updatedProjects);
-    setSelectedProject(null);
   };
 
   const handleAssignStudents = (projectId) => {
-    const projectToAssign = projects.find(
-      (project) => project.id === projectId
-    );
-    setSelectedProject(projectToAssign);
+    dispatch({ type: SET_SELECTED_PROJECT, projectId: projectId });
   };
 
   const handleSaveAssignedStudents = (students) => {
-    const updatedProjects = projects.map((project) => {
-      if (project.id === selectedProject.id) {
-        return {
-          ...project,
-          assignedStudents: students,
-        };
-      }
-      return project;
+    dispatch({
+      type: ASSIGN_STUDENTS,
+      projectId: state.selectedProject.id,
+      students: students,
     });
-    setProjects(updatedProjects);
     console.log("Students saved successfully!");
   };
 
   return (
     <ProjectsContext.Provider
       value={{
-        projects,
-        selectedProject,
-        setSelectedProject,
+        projects: state.projects,
+        selectedProject: state.selectedProject,
         handleDeleteProject,
         handleCreateProject,
         handleEditProject,
