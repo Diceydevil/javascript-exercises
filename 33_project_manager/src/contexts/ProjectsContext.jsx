@@ -82,13 +82,29 @@ function projectsReducer(state, action) {
   }
 }
 
+// Initialize state with localStorage
+function initializeState(initialState) {
+  const savedProjects = localStorage.getItem("projects");
+  if (savedProjects) {
+    return {
+      ...initialState,
+      projects: JSON.parse(savedProjects),
+    };
+  }
+  return initialState;
+}
+
 const ProjectsContext = createContext();
 
 export function ProjectsProvider({ children }) {
-  const [state, dispatch] = useReducer(projectsReducer, {
-    projects: [],
-    selectedProject: null,
-  });
+  const [state, dispatch] = useReducer(
+    projectsReducer,
+    {
+      projects: [],
+      selectedProject: null,
+    },
+    initializeState
+  );
 
   useEffect(() => {
     localStorage.setItem("projects", JSON.stringify(state.projects));
